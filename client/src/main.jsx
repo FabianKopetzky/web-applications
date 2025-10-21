@@ -15,6 +15,11 @@ import { initReactI18next } from 'react-i18next';
 import en from './assets/lang/en.json'
 import de from './assets/lang/de.json'
 
+const LANGUAGE_STORAGE = 'currentLanguage';
+
+let lang = JSON.parse(localStorage.getItem(LANGUAGE_STORAGE));
+if(lang === null || lang === undefined) lang = 'en'; 
+
 i18n
   .use(initReactI18next)
   .init({
@@ -22,7 +27,7 @@ i18n
       en: { translation: en },
       de: { translation: de },
     },
-    lng: 'en',
+    lng: lang,
     fallbackLng: 'en',
 
     interpolation: {
@@ -60,3 +65,5 @@ createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
   </StrictMode>,
 )
+
+export { LANGUAGE_STORAGE }
