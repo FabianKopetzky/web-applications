@@ -1,0 +1,26 @@
+{
+    "landing": {
+        "appTitle": "Organisier App",
+        "greeting": "Wir helfen dir, organisiert zu bleiben"
+    },
+    "login": {
+        "title": "Login",
+        "prompt": "Bitte einloggen",
+        "promptTitle": "Einloggen"
+    },
+    "register": {
+        "title": "Registrieren"
+    },
+    "dashboard": {
+        "title": "Dashboard"
+    },
+    "household": {
+        "title": "Haushalt"
+    },
+    "generic": {
+        "changeLang": "Sprache ändern"
+    },
+    "error": {
+        "notFound": "Route nicht gefunden"
+    }
+}
