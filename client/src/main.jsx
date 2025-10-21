@@ -8,6 +8,28 @@ import Login from './routes/login/Login.jsx'
 import Register from './routes/register/Register.jsx'
 import Dashboard from './routes/dashboard/Dashboard.jsx'
 import HouseHold from './routes/household/Household.jsx'
+import LoggedIn from './components/LoggedIn.jsx'
+
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import en from './assets/lang/en.json'
+import de from './assets/lang/de.json'
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      de: { translation: de },
+    },
+    lng: 'en',
+    fallbackLng: 'en',
+
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+
 
 const router = createBrowserRouter([
   {
@@ -25,11 +47,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard />
+    element: <LoggedIn> <Dashboard /> </LoggedIn>
   },
   {
     path: "household/:id",
-    element: <HouseHold />
+    element: <LoggedIn> <HouseHold /> </LoggedIn>
   }
 ]);
 
