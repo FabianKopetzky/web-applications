@@ -20,17 +20,17 @@ The following features and todos are open for this app. We tried to make the ass
 | LESSON Express Setup                                                                      | Mika        |
 | LESSON MongoDB Setup                                                                      | Fabian      |
 | LESSON User Authentication                                                                | Mika        |
-| ROUTE App (Landing page) & Not Found Basic HTML                                           |             |
-| ROUTE Login & Register Basic HTML                                                         |             |
-| ROUTE Dashboard Basic HTML                                                                |             |
-| ROUTE Household Basic HTML & Functionality                                                |             |
-| FEATURE User login / registration with session MongoDB (login / register functionality)   |             |
-| FEATURE Household chore list with mongodb (household page functionality)                  |             |
-| FEATURE Functionality to add / remove users from household                                |             |
-| FEATURE Dashboard functionality (listing households from logged in user in the dashboard) |             |
-| FEATURE Functionality to create new households                                            |             |
-| STYLE Create default styles and using component library                                   |             |
-| STYLE App (Landing page) & Not Found (and components used)                                |             |
-| STYLE Login & Register (and components used)                                              |             |
-| STYLE Dashboard (and components used)                                                     |             |
-| STYLE Household (and components used)                                                     |             |
+| ROUTE App (Landing page) & Not Found Basic HTML                                           | Fabian      |
+| ROUTE Login & Register Basic HTML                                                         | Mika        |
+| ROUTE Dashboard Basic HTML                                                                | Mika        |
+| ROUTE Household Basic HTML & Functionality                                                | Mika/Fabian |
+| FEATURE User login / registration with session MongoDB (login / register functionality)   | Mika        |
+| FEATURE Household chore list with mongodb (household page functionality)                  | Fabian      |
+| FEATURE Functionality to add / remove users from household                                | Fabian      |
+| FEATURE Dashboard functionality (listing households from logged in user in the dashboard) | Mika/Fabian |
+| FEATURE Functionality to create new households                                            | Fabian      |
+| STYLE Create default styles and using component library                                   | Mika        |
+| STYLE App (Landing page) & Not Found (and components used)                                | Mika        |
+| STYLE Login & Register (and components used)                                              | Mika        |
+| STYLE Dashboard (and components used)                                                     | Mika/Fabian |
+| STYLE Household (and components used)                                                     | Mika/Fabian |
