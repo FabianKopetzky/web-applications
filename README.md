@@ -1,16 +1,36 @@
-# React + Vite
+# Household Organizer App
+This app was made during the Web Applications course at fhooe hagenberg in media technology and design.
+Group members:
+- Fabian Kopetzky
+- Michaela Holzmann
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Technologies used
+- React
+- Express
+- MongoDB
+- Tailwind Postcss
+- Tailwind Components
 
-Currently, two official plugins are available:
+## Feature list
+The following features and todos are open for this app. We tried to make the assignment distribution fair and around 50/50
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Feature                                                                                   | Assigned to |
+| ----------------------------------------------------------------------------------------- | ----------- |
+| LESSON Routing & Setup                                                                    | Fabian      |
+| LESSON Express Setup                                                                      | Mika        |
+| LESSON MongoDB Setup                                                                      | Fabian      |
+| LESSON User Authentication                                                                | Mika        |
+| ROUTE App (Landing page) & Not Found Basic HTML                                           |             |
+| ROUTE Login & Register Basic HTML                                                         |             |
+| ROUTE Dashboard Basic HTML                                                                |             |
+| ROUTE Household Basic HTML & Functionality                                                |             |
+| FEATURE User login / registration with session MongoDB (login / register functionality)   |             |
+| FEATURE Household chore list with mongodb (household page functionality)                  |             |
+| FEATURE Functionality to add / remove users from household                                |             |
+| FEATURE Dashboard functionality (listing households from logged in user in the dashboard) |             |
+| FEATURE Functionality to create new households                                            |             |
+| STYLE Create default styles and using component library                                   |             |
+| STYLE App (Landing page) & Not Found (and components used)                                |             |
+| STYLE Login & Register (and components used)                                              |             |
+| STYLE Dashboard (and components used)                                                     |             |
+| STYLE Household (and components used)                                                     |             |
