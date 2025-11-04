@@ -12,6 +12,12 @@ export default defineConfig({
     watch: {
       usePolling: true, // Ensures file change detection inside Docker
     },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      }
+    },
     host: '0.0.0.0', // Allows external access
     strictPort: true,
   }
