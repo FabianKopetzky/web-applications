@@ -15,7 +15,8 @@
         "title": "Dashboard"
     },
     "household": {
-        "title": "Household"
+        "title": "Household",
+        "choreTitle": "Open chores"
     },
     "generic": {
         "changeLang": "Change language"
