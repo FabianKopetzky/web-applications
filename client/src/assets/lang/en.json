@@ -22,6 +22,7 @@
         "interval": "Interval (in days)",
         "lastDone": "Last done",
         "assignedTo": "Assigned user",
+        "actions": "Actions",
         "status": "Needs to be done until",
         "error": {
             "taskName": "Please enter a chore name",

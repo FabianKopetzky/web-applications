@@ -22,6 +22,7 @@
         "interval": "Intervall (in Tagen)",
         "lastDone": "Zuletzt erledigt",
         "assignedTo": "Zugeteilter Nutzer",
+        "actions": "Aktionen",
         "status": "Muss erledigt werden bis",
         "error": {
             "taskName": "Bitte gib einen Aufgabentitel ein",

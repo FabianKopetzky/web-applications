@@ -5,8 +5,11 @@ import { HouseHoldModel, HouseHoldTask } from "../../models/HouseHoldModel";
 import ChoreInput from "../../components/ChoreInput";
 import { useState } from "react";
 import ChoreItem from "../../components/ChoreItem";
+import api from "../../services/api";
 
 function HouseHold() {
+
+  const HOUSEHOLD_API = '/household';
 
   const { id } = useParams();
   const { t } = useTranslation();
@@ -41,6 +44,15 @@ function HouseHold() {
     (<ChoreItem taskItem={task} onUpdate={item => updateTask(item)} onDelete={item => deleteTask(item)} key={task.key}/>)
   );
 
+  async function sendToDb() {
+    try {
+      const response = await api.post(HOUSEHOLD_API, new HouseHoldModel("My household name", householdChores));
+      console.log(response);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   return (
     <>
       <h1>{ t('household.title') } { id }</h1>
@@ -68,7 +80,9 @@ function HouseHold() {
 
       <ChoreInput onSubmit={addTask} />
 
+       <button onClick={() => sendToDb()}>Debug send</button>
     </>
+
   )
 }
 
