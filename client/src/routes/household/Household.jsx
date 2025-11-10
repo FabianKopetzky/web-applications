@@ -43,20 +43,20 @@ function HouseHold() {
 
   return (
     <>
-      <h1>{ t('household.title')} { id }</h1>
+      <h1>{ t('household.title') } { id }</h1>
 
       <h2> {t('household.choreTitle')} </h2>
       <table>
         <thead>
           <tr>
-            <th>Task</th>
-            <th>Description</th>
-            <th>Interval</th>
-            <th>Last Done</th>
-            <th>Assigned to</th>
-            <th>Actions</th>
-            <th>Status</th>
-            <th>Key (remove later)</th>
+            <th>{ t('household.task') }</th>
+            <th>{ t('household.description') }</th>
+            <th>{ t('household.interval') }</th>
+            <th>{ t('household.lastDone') }</th>
+            <th>{ t('household.assignedTo') }</th>
+            <th>{ t('household.actions') }</th>
+            <th>{ t('household.status') }</th>
+            {/* <th>Key (remove later)</th> */}
           </tr>
         </thead>
         <tbody>

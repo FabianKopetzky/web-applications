@@ -15,10 +15,31 @@
         "title": "Dashboard"
     },
     "household": {
-        "title": "Haushalt"
+        "title": "Haushalt",
+        "choreTitle": "Offene Aufgaben",
+        "task": "Aufgabe",
+        "description": "Beschreibung",
+        "interval": "Intervall (in Tagen)",
+        "lastDone": "Zuletzt erledigt",
+        "assignedTo": "Zugeteilter Nutzer",
+        "status": "Muss erledigt werden bis",
+        "error": {
+            "taskName": "Bitte gib einen Aufgabentitel ein",
+            "interval": "Das Mindestintervall beträgt einen Tag",
+            "assignedUser": "Ein Nutzer muss zur Aufgabe zugeteilt sein"
+        },
+        "placeholder": {
+            "task": "Aufgabentitel",
+            "description": "Aufgabenbeschreibung"
+        },
+        "addChore": "Aufgabe hinzufügen",
+        "edit": "Bearbeiten",
+        "remove": "Löschen",
+        "markDone": "Erledigt markieren"
     },
     "generic": {
-        "changeLang": "Sprache ändern"
+        "changeLang": "Sprache ändern",
+        "optional": "(optional)"
     },
     "error": {
         "notFound": "Route nicht gefunden"
