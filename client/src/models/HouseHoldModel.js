@@ -8,11 +8,13 @@ class HouseHoldModel {
 }
 
 class HouseHoldTask {
-    constructor(taskName, interval, lastDoneDate, assignedUser) {
+    constructor(taskName, description, interval, lastDoneDate, assignedUser, key) {
         this.taskName = taskName; // string
+        this.description = description; // string
         this.interval = interval; // int, in days
         this.lastDoneDate = lastDoneDate; // date string
         this.assignedUser = assignedUser; // id of the user
+        this.key = key // random key to identify item
     }
 }
 

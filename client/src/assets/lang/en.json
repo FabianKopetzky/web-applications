@@ -15,10 +15,31 @@
         "title": "Dashboard"
     },
     "household": {
-        "title": "Household"
+        "title": "Household",
+        "choreTitle": "Open chores",
+        "task": "Chore",
+        "description": "Description",
+        "interval": "Interval (in days)",
+        "lastDone": "Last done",
+        "assignedTo": "Assigned user",
+        "status": "Needs to be done until",
+        "error": {
+            "taskName": "Please enter a chore name",
+            "interval": "Interval must be at least one day",
+            "assignedUser": "A user must be assigned to the chore"
+        },
+        "placeholder": {
+            "task": "Chore title",
+            "description": "Chore description"
+        },
+        "addChore": "Add chore",
+        "edit": "Edit",
+        "remove": "Remove",
+        "markDone": "Mark as done"
     },
     "generic": {
-        "changeLang": "Change language"
+        "changeLang": "Change language",
+        "optional": "(optional)"
     },
     "error": {
         "notFound": "Route not found"
