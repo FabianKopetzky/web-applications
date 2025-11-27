@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next"
+import AuthForm from "../../components/AuthForm";
 
 function Login() {
 
@@ -6,6 +7,7 @@ function Login() {
   return (
     <>
       <h1 className='text-center'>{ t('login.title') }</h1>
+      <AuthForm mode="login" />
     </>
   )
 }

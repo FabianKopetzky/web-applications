@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next"
+import AuthForm from "../../components/AuthForm";
 
 function Register() {
 
@@ -7,6 +8,7 @@ function Register() {
   return (
     <>
       <h1 className='text-center'>{ t('register.title') }</h1>
+            <AuthForm mode="register" />
     </>
   )
 }
