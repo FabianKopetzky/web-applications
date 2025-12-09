@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { activateUser } from "../api/auth";
+// import { activateUser } from "../api/auth";
+async function activateUser(token, data) {
+  const res = await fetch(`api/register/${token}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });}
 
 export default function Activate() {
+  
   const { token } = useParams(); // get token from URL
   const navigate = useNavigate();
 

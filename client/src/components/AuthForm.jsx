@@ -33,6 +33,7 @@ async function completeRegistration(token, first_name, last_name, password) {
 
 async function loginUser(email, password) {
   const res = await fetch("/api/login", {
+  // const res = await fetch("/api/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     credentials: "include",
@@ -43,6 +44,8 @@ async function loginUser(email, password) {
       client_id: "client",
     }),
   });
+
+  
 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));

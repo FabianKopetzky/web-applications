@@ -2,6 +2,13 @@ const express = require("express");
 const router = express.Router();
 // const fetch = require("node-fetch"); // if needed, or use axios
 
+router.post("/check", async (req, res) => {
+  console.log("This is the /api/check route");
+   const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json({ message: "Not logged in" });
+  else return res.status(200).json({message: "Token exists"})
+});
+
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -25,7 +32,8 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 1000, // 1 hour
-      sameSite: "Strict",
+      // sameSite: "Strict",
+      sameSite: "lax"
     });
 
     res.json({ message: "Logged in successfully" });
@@ -35,8 +43,15 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  res.clearCookie("accessToken");
-  res.json({ message: "Logged out" });
+  // Clear the accessToken cookie
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax", // must match the cookie settings from login
+  });
+
+  res.json({ message: "Logged out successfully" });
 });
+
 
 module.exports = router;

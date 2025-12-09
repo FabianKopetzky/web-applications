@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const listEndpoints = require("express-list-endpoints");
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -15,6 +16,9 @@ var userRouter = require('./routes/user');
 var householdRouter = require('./routes/household');
 var authRouter = require('./routes/auth');
 const api = require('./routes/api');;
+// const sessionRoutes = require('./routes/session')(app);
+// const authMiddleware = require('./middleware/authMiddleware')(app);
+
 
 
 require('dotenv').config();
@@ -24,9 +28,13 @@ var app = express();
 const port = process.env.PORT || 3000;
 
 
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -52,15 +60,22 @@ const routes = async () => {
     db.collection('token').createIndex({ emailTokenExpiresAt: 1 }, { expireAfterSeconds: 0 });
   
     const oauth = new OAuth2Server({ model: oAuthModel(db) });
+    app.set('oauth', oauth);
+    
   
      app.use('/api/register', register, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
-          app.use('/api/login', authRouter, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
+    app.use('/api', authRouter, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
     app.use('/api/token', oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
    
     app.use('/api', oauth.authenticate(), api);
-    app.use("/api", authRouter); // adds /api/login and /api/logout
+    // app.use("/api", authRouter); // adds /api/login and /api/logout
+    // app.use('/api/user', userRouter);
+    // app.use('/api/household', householdRouter);
+    // app.use('/api/session', sessionRoutes);
+
     app.use('/api/user', userRouter);
-    app.use('/api/household', householdRouter);
+    app.use('/api/household',householdRouter);
+
 
     app.get('/routes', (req, res) => {
       const routes = [];
@@ -98,7 +113,7 @@ const routes = async () => {
       res.status(err.status || 500);
       res.render('error');
     });
-  
+  console.log(listEndpoints(app));
     app.listen(port, () => console.log(`Example app listening on port ${port}`));
   } catch (err) {
     console.error(err);
@@ -106,5 +121,6 @@ const routes = async () => {
 };
 
 routes();
+
 
 module.exports = app;
