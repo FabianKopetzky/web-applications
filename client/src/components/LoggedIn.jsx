@@ -1,18 +1,49 @@
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom"
+// LoggedIn.jsx
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
-function LoggedIn(props) {
-  let isLoggedIn = true;
+function LoggedIn({ children }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // null = still checking
 
-  const { t } = useTranslation();
-  
-  if(!isLoggedIn) {
-    return (<>
-        <h1 className='text-center'>{ t('login.prompt') }</h1>
-        <Link to="/login">{ t('login.promptTitle') }</Link>
-    </>)
-  }
-  return <>{ props.children }</>
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        // Send cookie with request
+        // const res = await fetch("/auth/check", {
+        //   credentials: "include", // critical for sending cookies
+        // });
+
+  const res = await fetch("/api/check", {
+    method: "POST",
+    // headers: { "Content-Type": "application/json" },
+    // body: JSON.stringify({ email }),
+    credentials: "include"
+  });
+
+        if (res.ok) {
+          // If 200, user is logged in
+          setIsLoggedIn(true);
+        } else {
+          // Any other status → not logged in
+          setIsLoggedIn(false);
+        }
+      } catch (err) {
+        console.error("Error checking login:", err);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkLogin();
+  }, []);
+
+  // While waiting for login check
+  if (isLoggedIn === null) return <p>Loading...</p>;
+
+  // If not logged in, redirect to login page
+  if (!isLoggedIn) return <Navigate to="/login" />;
+
+  // User is logged in → render protected content
+  return <>{children}</>;
 }
 
-export default LoggedIn
+export default LoggedIn;

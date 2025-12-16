@@ -9,11 +9,14 @@ import Register from './routes/register/Register.jsx'
 import Dashboard from './routes/dashboard/Dashboard.jsx'
 import HouseHold from './routes/household/Household.jsx'
 import LoggedIn from './components/LoggedIn.jsx'
+import Activate from './components/Activation.jsx'
 
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './assets/lang/en.json'
 import de from './assets/lang/de.json'
+import RegisterActivation from './routes/register/RegisterActivation.jsx'
+
 
 const LANGUAGE_STORAGE = 'currentLanguage';
 
@@ -57,7 +60,11 @@ const router = createBrowserRouter([
   {
     path: "household/:id",
     element: <LoggedIn> <HouseHold /> </LoggedIn>
-  }
+  },
+  {
+    path: "register/:token",
+    element: <RegisterActivation />  // full activation form
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(
