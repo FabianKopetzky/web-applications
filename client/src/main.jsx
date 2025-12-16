@@ -55,11 +55,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <LoggedIn> <Dashboard /> </LoggedIn>
+    element: <Dashboard /> 
   },
   {
     path: "household/:id",
-    element: <LoggedIn> <HouseHold /> </LoggedIn>
+    element: <HouseHold /> 
   },
   {
     path: "register/:token",

@@ -5,4 +5,11 @@ const api = axios.create({
     withCredentials: true // automatically sends cookies - needed for authentication
 });
 
+const token = localStorage.getItem('accessToken');
+console.log(token)
+const res = await api.get("/getUser", {
+  headers: { Authorization: `Bearer ${token}` }
+});
+console.log("Another" + token)
+
 export default api;

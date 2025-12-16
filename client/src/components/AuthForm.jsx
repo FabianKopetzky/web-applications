@@ -32,8 +32,7 @@ async function completeRegistration(token, first_name, last_name, password) {
 }
 
 async function loginUser(email, password) {
-  const res = await fetch("/api/auth/login", {
-  // const res = await fetch("/api/token", {
+  const res = await fetch("/api/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     credentials: "include",
@@ -94,7 +93,9 @@ export default function AuthForm({ mode }) {
       // LOGIN
       if (isLogin) {
         const data = await loginUser(form.email, form.password);
-        localStorage.setItem("accessToken", data.accessToken);
+        console.log("TOKEN RESPONSE:", data);
+        localStorage.setItem("accessToken", data.access_token);
+        localStorage.setItem("refreshToken", data.refresh_token);
         alert("Login successful!");
         navigate("/dashboard");
       }

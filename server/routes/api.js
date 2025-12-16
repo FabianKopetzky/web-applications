@@ -1,4 +1,4 @@
-// api.js
+// api.js - User Authorization
 var express = require('express');
 var ObjectId = require('mongodb').ObjectId;
 
@@ -29,29 +29,29 @@ router.get("/getUser", async (req, res) => {
 
 
 // route to create a todo
-router.post('/todo', writeAccess, async function(req, res) {
-  try {
-    var db = req.app.get('db');
-    var insertion = await db.collection('todo').insertOne({
-      ...req.body,
-      creator_id: res.locals.user._id
-    });
+// router.post('/todo', writeAccess, async function(req, res) {
+//   try {
+//     var db = req.app.get('db');
+//     var insertion = await db.collection('todo').insertOne({
+//       ...req.body,
+//       creator_id: res.locals.user._id
+//     });
 
-    if (insertion.acknowledged) {
-      var todo = await db.collection('todo').findOne({ _id: insertion.insertedId });
+//     if (insertion.acknowledged) {
+//       var todo = await db.collection('todo').findOne({ _id: insertion.insertedId });
 
-      if (todo) {
-        res.status(201).json(todo);
-      } else {
-        res.status(404).send();
-      }
-    } else {
-      res.status(500).send();
-    }
-  } catch(err) {
-    console.error(err);
-    res.status(500).send();
-  }
-});
+//       if (todo) {
+//         res.status(201).json(todo);
+//       } else {
+//         res.status(404).send();
+//       }
+//     } else {
+//       res.status(500).send();
+//     }
+//   } catch(err) {
+//     console.error(err);
+//     res.status(500).send();
+//   }
+// });
 
 module.exports = router;

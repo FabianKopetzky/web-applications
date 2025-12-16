@@ -14,8 +14,7 @@ router.post('/', async (req, res) => {
       const token = uuidv4();
       const tokenInsertion = await db.collection('token').insertOne({
         emailToken: token,
-        // emailTokenExpiresAt: new Date(Date.now() + (1000 * 60 * 60)), // now plus 60 minutes
-        emailTokenExpiresAt: new Date(Date.now() + (10 * 60 * 1000)), // now plus 10 minutes
+        emailTokenExpiresAt: new Date(Date.now() + (1000 * 60 * 60)), // now plus 60 minutes
         user_id: insertion.insertedId,
       });
 
@@ -36,8 +35,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// register.js
-
+// Activate User
 router.put('/:token', async (req, res) => {
   try {
     const db = req.app.get('db');
