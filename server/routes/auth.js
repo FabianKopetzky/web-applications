@@ -3,11 +3,12 @@ const router = express.Router();
 // const fetch = require("node-fetch"); // if needed, or use axios
 
 router.post("/check", async (req, res) => {
-  console.log("This is the /api/check route");
+  console.log("This is the /api/auth/check route");
    const token = req.cookies.accessToken;
   if (!token) return res.status(401).json({ message: "Not logged in" });
   else return res.status(200).json({message: "Token exists"})
 });
+
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;

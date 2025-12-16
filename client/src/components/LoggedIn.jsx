@@ -13,7 +13,7 @@ function LoggedIn({ children }) {
         //   credentials: "include", // critical for sending cookies
         // });
 
-  const res = await fetch("/api/check", {
+  const res = await fetch("/api/auth/check", {
     method: "POST",
     // headers: { "Content-Type": "application/json" },
     // body: JSON.stringify({ email }),

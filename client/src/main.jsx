@@ -38,7 +38,7 @@ i18n
     },
   });
 
-
+//! USE THIS FOR BUILD
 const router = createBrowserRouter([
   {
     path: "/",
@@ -66,6 +66,35 @@ const router = createBrowserRouter([
     element: <RegisterActivation />  // full activation form
   },
 ]);
+
+//! THIS IS FOR CLIENT SIDE TESTING
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />,
+//     errorElement: <NotFound />
+//   },
+//   {
+//     path: "login",
+//     element: <Login />
+//   },
+//   {
+//     path: "register",
+//     element: <Register />
+//   },
+//   {
+//     path: "dashboard",
+//     element: <Dashboard />
+//   },
+//   {
+//     path: "household/:id",
+//     element: <HouseHold />
+//   },
+//   {
+//     path: "register/:token",
+//     element: <RegisterActivation />  // full activation form
+//   },
+// ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
