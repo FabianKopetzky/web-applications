@@ -61,10 +61,12 @@ const routes = async () => {
   
     const oauth = new OAuth2Server({ model: oAuthModel(db) });
     app.set('oauth', oauth);
-    
+
+    app.use('/api/household',householdRouter);
+    app.use('/api/user', userRouter);
   
-     app.use('/api/register', register, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
-    app.use('/api', authRouter, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
+    app.use('/api/register', register, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
+    app.use('/api/auth', authRouter, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
     app.use('/api/token', oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
    
     app.use('/api', oauth.authenticate(), api);
@@ -72,9 +74,9 @@ const routes = async () => {
     // app.use('/api/user', userRouter);
     // app.use('/api/household', householdRouter);
     // app.use('/api/session', sessionRoutes);
-
-    app.use('/api/user', userRouter);
-    app.use('/api/household',householdRouter);
+    
+    
+    
 
 
     app.get('/routes', (req, res) => {
@@ -114,7 +116,7 @@ const routes = async () => {
       res.render('error');
     });
   console.log(listEndpoints(app));
-    app.listen(port, () => console.log(`Example app listening on port ${port}`));
+    app.listen(port, () => console.log(`Household app listening on port ${port}`));
   } catch (err) {
     console.error(err);
   }
