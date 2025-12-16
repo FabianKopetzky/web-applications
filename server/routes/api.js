@@ -23,6 +23,11 @@ async function writeAccess(req, res, next) {
   }
 }
 
+router.get("/getUser", async (req, res) => {
+    res.json(res.locals.user);
+});
+
+
 // route to create a todo
 router.post('/todo', writeAccess, async function(req, res) {
   try {

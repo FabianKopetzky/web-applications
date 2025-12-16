@@ -10,7 +10,7 @@ import api from "../../services/api";
 function Dashboard() {
 
   const HOUSEHOLD_API = '/household';
-  const AUTH_API = '/auth/getUser';
+  const AUTH_API = '/getUser';
 
   const { t } = useTranslation();
 

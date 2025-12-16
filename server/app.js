@@ -47,6 +47,13 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // in OAuth2 standard, credentials are sent as "application/x-www-form-urlencoded", this middleware allows parsing it
 
+async function getUser(req, res, next) {
+    var db = req.app.get('db');
+    var user = await db.collection('user').findOne({ _id: res.locals?.oauth?.token?.user?.user_id });
+    res.locals.user = user;
+    next();
+}
+
 const routes = async () => {
   try {
     const client = new MongoClient(process.env.MONGODB_CONNECTION_STRING);
@@ -69,7 +76,7 @@ const routes = async () => {
     app.use('/api/auth', authRouter, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
     app.use('/api/token', oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
    
-    app.use('/api', oauth.authenticate(), api);
+    app.use('/api', oauth.authenticate(), getUser, api);
     // app.use("/api", authRouter); // adds /api/login and /api/logout
     // app.use('/api/user', userRouter);
     // app.use('/api/household', householdRouter);

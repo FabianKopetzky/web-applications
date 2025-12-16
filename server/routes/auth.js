@@ -9,14 +9,6 @@ router.post("/check", async (req, res) => {
   else return res.status(200).json({message: "Token exists"})
 });
 
-router.get("/getUser", async (req, res) => {
-  const token = req.cookies.accessToken;
-
-  if(!token) return res.status(401).json({ message: "No access token" });
-
-  console.log(token.user_id);
-  return res.status(200).json({ u_id: token.user_id });
-});
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
