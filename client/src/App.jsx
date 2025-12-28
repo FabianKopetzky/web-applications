@@ -13,8 +13,8 @@ function App() {
 
   return (
     <>
-      <a href="/register">Register</a> <br />
-      <a href="/login">Login</a>
+      <a href="/register">{t('register.title')}</a> <br />
+      <a href="/login">{t('login.title')}</a>
       <h1 className='text-center'>{ t('landing.appTitle') }</h1>
       <p className='text-center'>{ t('landing.greeting') }</p>
       <br />

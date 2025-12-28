@@ -47,6 +47,8 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+
 // Activate User
 router.put('/:token', async (req, res) => {
   try {

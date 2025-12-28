@@ -4,12 +4,28 @@
         "greeting": "Wir helfen dir, organisiert zu bleiben"
     },
     "login": {
-        "title": "Login",
-        "prompt": "Bitte einloggen",
-        "promptTitle": "Einloggen"
+        "title": "Anmelden",
+        "placeholderEmail": "E-Mail",
+        "placeholderPassword": "Passwort",
+        "button": "Anmelden",
+        "noAccount": "Noch keinen Account?",
+        "pleaseLogin": "Bitte logge dich ein.",
+        "logout": "Abmelden"
     },
     "register": {
-        "title": "Registrieren"
+        "title": "Registrieren",
+        "placeholderEmail": "E-Mail",
+        "button": "Registrieren",
+        "alreadyAccount": "Schon einen Account?"
+    },
+    "activation": {
+        "title": "Aktiviere deinen Account",
+        "subtitle": "Bald kann das Planen endlich losgehen!",
+        "placeholderName": "Vorname Nachname",
+        "placeholderPassword": "Passwort",
+        "placeholderConfirmPassword": "Passwort bestätigen",
+        "button": "Aktivieren",
+        "checkEmail": "Prüfe die Server Konsole für den Aktivierungslink."
     },
     "dashboard": {
         "title": "Dashboard"
@@ -43,6 +59,14 @@
         "optional": "(optional)"
     },
     "error": {
-        "notFound": "Route nicht gefunden"
+        "notFound": "Route nicht gefunden",
+        "invalidEmail": "Ungültige E-Mail-Adresse",
+        "emailRequired": "E-Mail ist erforderlich",
+        "passwordTooShort": "Passwort muss mindestens 6 Zeichen lang sein",
+        "passwordsDontMatch": "Passwörter stimmen nicht überein",
+        "activationTokenMissing": "Aktivierungstoken fehlt",
+        "registrationFailed": "Registrierung fehlgeschlagen",
+        "activationFailed": "Aktivierung fehlgeschlagen",
+        "loginFailed": "Login fehlgeschlagen"
     }
 }
