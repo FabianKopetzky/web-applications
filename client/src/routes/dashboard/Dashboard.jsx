@@ -92,7 +92,7 @@ function Dashboard() {
 
   return (
     <>
-        {/* <LogoutButton /> */}
+        <LogoutButton />
         <h1 className='text-center'>{ t('dashboard.title') }</h1>
 
         <div className="flex flex-row w-full justify-evenly">

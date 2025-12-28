@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+
+const isValidEmail = (email) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+const isStrongEnoughPassword = (password) =>
+  password.length >= 6;
+
+
 /* ============================================
    API FUNCTIONS
    ============================================ */
@@ -82,14 +90,58 @@ export default function AuthForm({ mode }) {
     if (token) setCurrentMode("activation");
   }, [token]);
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
+  // const { name, value } = e.target;
+  // setForm((prev) => ({ ...prev, [name]: value }));
+};
 
-    try {
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setMessage("");
+
+  // ---------- LOGIN ----------
+  if (isLogin) {
+    if (!form.email || !form.password) {
+      setMessage("Email and password are required");
+      return;
+    }
+    if (!isValidEmail(form.email)) {
+      setMessage("Invalid email address");
+      return;
+    }
+  }
+
+  // ---------- REGISTER ----------
+  if (isRegister) {
+    if (!form.email) {
+      setMessage("Email is required");
+      return;
+    }
+    if (!isValidEmail(form.email)) {
+      setMessage("Invalid email address");
+      return;
+    }
+  }
+
+  // ---------- ACTIVATION ----------
+  if (isActivation) {
+    // if (!form.name.trim()) {
+    //   setMessage("Full name is required");
+    //   return;
+    // }
+    if (!isStrongEnoughPassword(form.password)) {
+      setMessage("Password must be at least 6 characters");
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      setMessage("Passwords do not match");
+      return;
+    }
+  }
+
+  try {
       // LOGIN
       if (isLogin) {
         const data = await loginUser(form.email, form.password);
@@ -121,8 +173,13 @@ export default function AuthForm({ mode }) {
         }
 
         // Split full name into first and last
+
         let [first_name, ...lastParts] = form.name.trim().split(" ");
         let last_name = lastParts.join(" ") || "";
+
+        // if (first_name == last_name) {
+        //   last_name = ""
+        // }
 
         await completeRegistration(token, first_name, last_name, form.password);
         alert("Account activated! Please log in.");
@@ -164,7 +221,7 @@ export default function AuthForm({ mode }) {
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
+              placeholder="First Name"
               value={form.name}
               onChange={handleChange}
               required
@@ -211,7 +268,8 @@ export default function AuthForm({ mode }) {
       {isLogin && (
         <p>
           Don't have an account?{" "}
-          <a href="#" onClick={() => setCurrentMode("register")}>
+          {/* <a href="#" onClick={() => setCurrentMode("register")}> */}
+          <a href="/register">
             Register
           </a>
         </p>
@@ -220,7 +278,8 @@ export default function AuthForm({ mode }) {
       {isRegister && (
         <p>
           Already have an account?{" "}
-          <a href="#" onClick={() => setCurrentMode("login")}>
+          {/* <a href="#" onClick={() => setCurrentMode("login")}> */}
+          <a href="/login">
             Login
           </a>
         </p>

@@ -1,17 +1,23 @@
-function LogoutButton() {
-  // const handleLogout = async () => {
-  //   try {
-  //     await fetch("/api/auth/logout", {
-  //       method: "POST",
-  //       credentials: "include",
-  //     });
-  //     window.location.href = "/login";
-  //   } catch (err) {
-  //     alert("Logout failed. Please try again.");
-  //   }
-  // };
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-  return <button onClick={handleLogout}>Logout</button>;
+export default function LogoutButton() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear tokens
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
+    // Optional: call backend logout API if needed
+
+    // Redirect to login
+    navigate("/login");
+  };
+
+  return (
+    <button onClick={handleLogout} className="logout-button">
+      Logout
+    </button>
+  );
 }
-
-export default LogoutButton;

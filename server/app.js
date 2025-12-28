@@ -8,16 +8,12 @@ var OAuth2Server = require('express-oauth-server');
 var register = require('./routes/register');
 const oAuthModel = require('./oAuthModel');
 
- // this connects the OAuthServer to our Database
-
 var MongoClient = require('mongodb').MongoClient;
 
 var userRouter = require('./routes/user');
 var householdRouter = require('./routes/household');
-var authRouter = require('./routes/auth');
 const api = require('./routes/api');;
-// const sessionRoutes = require('./routes/session')(app);
-// const authMiddleware = require('./middleware/authMiddleware')(app);
+
 
 
 
@@ -77,8 +73,8 @@ const routes = async () => {
 
     app.set('oauth', oauth); //? What about this?
 
-    app.use('/api/household',householdRouter);
-    app.use('/api/user', userRouter);
+    app.use('/api/household',oauth.authenticate(), householdRouter);
+    app.use('/api/user', oauth.authenticate(), userRouter);
   
     app.use('/api/register', register);
     app.use('/api/token', oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
