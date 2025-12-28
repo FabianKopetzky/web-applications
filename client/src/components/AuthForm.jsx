@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+const isValidEmail = (email) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+const isStrongEnoughPassword = (password) =>
+  password.length >= 6;
 
 /* ============================================
    API FUNCTIONS
-   ============================================ */
+============================================ */
 
 async function registerUser(email) {
   const res = await fetch("/api/register", {
@@ -14,7 +21,7 @@ async function registerUser(email) {
 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.message || "Registration failed");
+    throw new Error(data.message || "error.registrationFailed");
   }
 }
 
@@ -27,13 +34,12 @@ async function completeRegistration(token, first_name, last_name, password) {
 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.message || "Activation failed");
+    throw new Error(data.message || "error.activationFailed");
   }
 }
 
 async function loginUser(email, password) {
-  const res = await fetch("/api/auth/login", {
-  // const res = await fetch("/api/token", {
+  const res = await fetch("/api/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     credentials: "include",
@@ -45,25 +51,23 @@ async function loginUser(email, password) {
     }),
   });
 
-  
-
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.message || "Login failed");
+    throw new Error(data.message || "error.loginFailed");
   }
 
-  return res.json(); // { message: "Logged in successfully" }
+  return res.json();
 }
-
 
 /* ============================================
    AUTH FORM COMPONENT
-   ============================================ */
+============================================ */
 
 export default function AuthForm({ mode }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const params = useParams();
-  const token = params.token; // grabs token from /register/:token
+  const token = params.token;
 
   const [currentMode, setCurrentMode] = useState(mode || "login");
   const [form, setForm] = useState({
@@ -78,53 +82,76 @@ export default function AuthForm({ mode }) {
   const isRegister = currentMode === "register";
   const isActivation = currentMode === "activation";
 
-  // Auto-switch to activation mode if token exists
   useEffect(() => {
-    if (token) setCurrentMode("activation");
+    if (token) {
+      setCurrentMode("activation");
+
+      fetch(`/api/register/${token}`)
+        .then(res => res.json())
+        .then(data => setForm(prev => ({ ...prev, email: data.email || "" })))
+        .catch(() => setForm(prev => ({ ...prev, email: "" })));
+    }
   }, [token]);
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
     try {
-      // LOGIN
       if (isLogin) {
+        if (!form.email || !form.password) {
+          setMessage(t('error.emailRequired'));
+          return;
+        }
+        if (!isValidEmail(form.email)) {
+          setMessage(t('error.invalidEmail'));
+          return;
+        }
+
         const data = await loginUser(form.email, form.password);
-        localStorage.setItem("accessToken", data.accessToken);
-        alert("Login successful!");
+        localStorage.setItem("accessToken", data.access_token);
+        localStorage.setItem("refreshToken", data.refresh_token);
+        alert(t('login.title') + " erfolgreich!");
         navigate("/dashboard");
       }
 
-      // REGISTER (email only)
       if (isRegister) {
+        if (!form.email) {
+          setMessage(t('error.emailRequired'));
+          return;
+        }
+        if (!isValidEmail(form.email)) {
+          setMessage(t('error.invalidEmail'));
+          return;
+        }
+
         await registerUser(form.email);
-        alert(
-          "Registration started! Check your email for the activation link."
-        );
+        alert(t('register.title') + " gestartet! " + t('activation.checkEmail'));
       }
 
-      // ACTIVATION (full name + password)
       if (isActivation) {
         if (!token) {
-          setMessage("Activation token missing");
+          setMessage(t('error.activationTokenMissing'));
           return;
         }
-
+        if (!isStrongEnoughPassword(form.password)) {
+          setMessage(t('error.passwordTooShort'));
+          return;
+        }
         if (form.password !== form.confirmPassword) {
-          setMessage("Passwords do not match");
+          setMessage(t('error.passwordsDontMatch'));
           return;
         }
 
-        // Split full name into first and last
-        let [first_name, ...lastParts] = form.name.trim().split(" ");
-        let last_name = lastParts.join(" ") || "";
+        const [first_name, ...lastParts] = form.name.trim().split(" ");
+        const last_name = lastParts.join(" ") || "";
 
         await completeRegistration(token, first_name, last_name, form.password);
-        alert("Account activated! Please log in.");
+        alert(t('activation.title') + " erfolgreich! " + t('login.pleaseLogin'));
         navigate("/login");
       }
     } catch (err) {
@@ -136,34 +163,33 @@ export default function AuthForm({ mode }) {
   return (
     <div className="auth-container">
       <h1>
-        {isLogin && "Login"}
-        {isRegister && "Register"}
-        {isActivation &&
-          `Activating account for ${form.email ? form.email : "user"}`}
+        {isLogin && t('login.title')}
+        {isRegister && t('register.title')}
+        {isActivation && `${t('activation.title')} ${form.email || ""}`}
       </h1>
+
+      {isActivation && <p>{t('activation.subtitle')}</p>}
 
       {message && <p style={{ color: "red" }}>{message}</p>}
 
       <form onSubmit={handleSubmit}>
-        {/* Email for login & register */}
         {(isLogin || isRegister) && (
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder={t('login.placeholderEmail')}
             value={form.email}
             onChange={handleChange}
             required
           />
         )}
 
-        {/* Activation fields */}
         {isActivation && (
           <>
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
+              placeholder={t('activation.placeholderName')}
               value={form.name}
               onChange={handleChange}
               required
@@ -171,7 +197,7 @@ export default function AuthForm({ mode }) {
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder={t('activation.placeholderPassword')}
               value={form.password}
               onChange={handleChange}
               required
@@ -179,7 +205,7 @@ export default function AuthForm({ mode }) {
             <input
               type="password"
               name="confirmPassword"
-              placeholder="Confirm Password"
+              placeholder={t('activation.placeholderConfirmPassword')}
               value={form.confirmPassword}
               onChange={handleChange}
               required
@@ -187,12 +213,11 @@ export default function AuthForm({ mode }) {
           </>
         )}
 
-        {/* Login password */}
         {isLogin && (
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder={t('login.placeholderPassword')}
             value={form.password}
             onChange={handleChange}
             required
@@ -200,29 +225,17 @@ export default function AuthForm({ mode }) {
         )}
 
         <button type="submit">
-          {isLogin && "Login"}
-          {isRegister && "Register"}
-          {isActivation && "Activate"}
+          {isLogin && t('login.button')}
+          {isRegister && t('register.button')}
+          {isActivation && t('activation.button')}
         </button>
       </form>
 
-      {/* Navigation links */}
       {isLogin && (
-        <p>
-          Don't have an account?{" "}
-          <a href="#" onClick={() => setCurrentMode("register")}>
-            Register
-          </a>
-        </p>
+        <p>{t('login.noAccount')} <a href="/register">{t('register.title')}</a></p>
       )}
-
       {isRegister && (
-        <p>
-          Already have an account?{" "}
-          <a href="#" onClick={() => setCurrentMode("login")}>
-            Login
-          </a>
-        </p>
+        <p>{t('register.alreadyAccount')} <a href="/login">{t('login.title')}</a></p>
       )}
     </div>
   );

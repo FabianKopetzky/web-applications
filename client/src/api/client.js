@@ -21,7 +21,7 @@ export async function apiFetch(url, options = {}) {
   if (res.status === 401 && refreshTokenValue) {
     try {
       const newTokens = await refreshToken(refreshTokenValue);
-
+      console.log("TOKEN RESPONSE:", data);
       // Save new tokens
       localStorage.setItem("access_token", newTokens.accessToken);
       localStorage.setItem("refresh_token", newTokens.refreshToken);

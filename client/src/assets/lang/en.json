@@ -5,11 +5,27 @@
     },
     "login": {
         "title": "Login",
-        "prompt": "Please log in",
-        "promptTitle": "Login"
+        "placeholderEmail": "Email",
+        "placeholderPassword": "Password",
+        "button": "Login",
+        "noAccount": "Don't have an account?",
+        "pleaseLogin": "Please log in.",
+        "logout": "Logout"
     },
     "register": {
-        "title": "Register"
+        "title": "Register",
+        "placeholderEmail": "Email",
+        "button": "Register",
+        "alreadyAccount": "Already have an account?"
+    },
+        "activation": {
+        "title": "Activate your account",
+        "subtitle": "Start planning soon!",
+        "placeholderName": "Firstname Lastname",
+        "placeholderPassword": "Password",
+        "placeholderConfirmPassword": "Confirm Password",
+        "button": "Activate",
+        "checkEmail": "Check the server console for the activation link."
     },
     "dashboard": {
         "title": "Dashboard"
@@ -43,6 +59,14 @@
         "optional": "(optional)"
     },
     "error": {
-        "notFound": "Route not found"
+        "notFound": "Route not found",
+        "invalidEmail": "Invalid email address",
+        "emailRequired": "Email is required",
+        "passwordTooShort": "Password must be at least 6 characters long",
+        "passwordsDontMatch": "Passwords do not match",
+        "activationTokenMissing": "Activation token is missing",
+        "registrationFailed": "Registration failed",
+        "activationFailed": "Activation failed",
+        "loginFailed": "Login failed"
     }
 }

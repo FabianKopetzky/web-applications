@@ -1,49 +1,31 @@
-// LoggedIn.jsx
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import api from "../services/api";
 
-function LoggedIn({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(null); // null = still checking
+export default function LoggedIn({ children }) {
+  const [loading, setLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    const checkLogin = async () => {
+    async function checkAuth() {
       try {
-        // Send cookie with request
-        // const res = await fetch("/auth/check", {
-        //   credentials: "include", // critical for sending cookies
-        // });
-
-  const res = await fetch("/api/auth/check", {
-    method: "POST",
-    // headers: { "Content-Type": "application/json" },
-    // body: JSON.stringify({ email }),
-    credentials: "include"
-  });
-
-        if (res.ok) {
-          // If 200, user is logged in
-          setIsLoggedIn(true);
-        } else {
-          // Any other status → not logged in
-          setIsLoggedIn(false);
-        }
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await api.get("/getUser", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+        setAuthorized(true);
       } catch (err) {
-        console.error("Error checking login:", err);
-        setIsLoggedIn(false);
+        setAuthorized(false);
+      } finally {
+        setLoading(false);
       }
-    };
-
-    checkLogin();
+    }
+    checkAuth();
   }, []);
 
-  // While waiting for login check
-  if (isLoggedIn === null) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>; // or spinner
 
-  // If not logged in, redirect to login page
-  if (!isLoggedIn) return <Navigate to="/login" />;
+  if (!authorized) return <Navigate to="/login" replace />;
 
-  // User is logged in → render protected content
-  return <>{children}</>;
+  return children;
 }
-
-export default LoggedIn;

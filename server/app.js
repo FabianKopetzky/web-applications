@@ -8,16 +8,12 @@ var OAuth2Server = require('express-oauth-server');
 var register = require('./routes/register');
 const oAuthModel = require('./oAuthModel');
 
- // this connects the OAuthServer to our Database
-
 var MongoClient = require('mongodb').MongoClient;
 
 var userRouter = require('./routes/user');
 var householdRouter = require('./routes/household');
-var authRouter = require('./routes/auth');
 const api = require('./routes/api');;
-// const sessionRoutes = require('./routes/session')(app);
-// const authMiddleware = require('./middleware/authMiddleware')(app);
+
 
 
 
@@ -54,6 +50,13 @@ async function getUser(req, res, next) {
     next();
 }
 
+// async function getUser(req, res, next) {
+//     res.locals.user = req.user; // already populated by oauth.authenticate()
+//     next();
+// }
+
+
+
 const routes = async () => {
   try {
     const client = new MongoClient(process.env.MONGODB_CONNECTION_STRING);
@@ -67,23 +70,16 @@ const routes = async () => {
     db.collection('token').createIndex({ emailTokenExpiresAt: 1 }, { expireAfterSeconds: 0 });
   
     const oauth = new OAuth2Server({ model: oAuthModel(db) });
-    app.set('oauth', oauth);
 
-    app.use('/api/household',householdRouter);
-    app.use('/api/user', userRouter);
+    app.set('oauth', oauth); //? What about this?
+
+    app.use('/api/household',oauth.authenticate(), householdRouter);
+    app.use('/api/user', oauth.authenticate(), userRouter);
   
-    app.use('/api/register', register, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
-    app.use('/api/auth', authRouter, oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
+    app.use('/api/register', register);
     app.use('/api/token', oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
    
     app.use('/api', oauth.authenticate(), getUser, api);
-    // app.use("/api", authRouter); // adds /api/login and /api/logout
-    // app.use('/api/user', userRouter);
-    // app.use('/api/household', householdRouter);
-    // app.use('/api/session', sessionRoutes);
-    
-    
-    
 
 
     app.get('/routes', (req, res) => {

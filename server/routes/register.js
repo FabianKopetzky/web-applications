@@ -9,13 +9,24 @@ router.post('/', async (req, res) => {
   try {
     const db = req.app.get('db');
     // TODO: validate req.body (email)
+    const { email } = req.body;
+
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      return res.status(400).send('Invalid email');
+    }
+    const existingUser = await db.collection('user_auth').findOne({ username: email });
+
+    if (existingUser) {
+      return res.status(409).json({ message: 'Email already registered' });
+    }
+
+
     const insertion = await db.collection('user_auth').insertOne({ username: req.body.email });
     if (insertion.acknowledged) {
       const token = uuidv4();
       const tokenInsertion = await db.collection('token').insertOne({
         emailToken: token,
-        // emailTokenExpiresAt: new Date(Date.now() + (1000 * 60 * 60)), // now plus 60 minutes
-        emailTokenExpiresAt: new Date(Date.now() + (10 * 60 * 1000)), // now plus 10 minutes
+        emailTokenExpiresAt: new Date(Date.now() + (1000 * 60 * 60)), // now plus 60 minutes
         user_id: insertion.insertedId,
       });
 
@@ -36,8 +47,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-// register.js
 
+
+// Activate User
 router.put('/:token', async (req, res) => {
   try {
     const db = req.app.get('db');

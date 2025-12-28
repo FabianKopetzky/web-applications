@@ -5,6 +5,7 @@ import { useState } from "react";
 import HouseHold from "../household/Household";
 import { HouseHoldModel } from "../../models/HouseHoldModel";
 import api from "../../services/api";
+import LoggedIn from "../../components/LoggedIn";
 
 
 function Dashboard() {
@@ -17,9 +18,28 @@ function Dashboard() {
   const [newHouseholdName, setNewHouseholdName] = useState('');
   const [error, setError] = useState('');
 
+  // async function getCurrentUser() {
+  //   try {
+  //     console.log("Token:", localStorage.getItem('accessToken'));
+
+  //     const response = await api.get(AUTH_API);
+  //     console.log("Response:");
+  //     console.log(response);
+  //     console.log("Data:");
+  //     console.log(response.data);
+  //   } catch(err) {
+  //     console.log(err);
+  //   }
+  // }
+
   async function getCurrentUser() {
     try {
-      const response = await api.get(AUTH_API);
+      console.log("Token:", localStorage.getItem('accessToken'));
+
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await api.get(AUTH_API, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
       console.log("Response:");
       console.log(response);
       console.log("Data:");
@@ -28,6 +48,26 @@ function Dashboard() {
       console.log(err);
     }
   }
+
+//   async function getCurrentUser() {
+//   try {
+//     const accessToken = localStorage.getItem("accessToken");
+    // const res = await api.get("/getUser", {
+    //   headers: { Authorization: `Bearer ${accessToken}` }
+    // });
+
+//     console.log("User data:", res.data);
+//     return res.data;
+//   } catch (err) {
+//     console.error("Error fetching user:", err);
+
+//     // Optional: handle token expiration using refresh token
+//     const refreshToken = localStorage.getItem("refreshToken");
+//     console.log("Access token may be expired. Refresh token:", refreshToken);
+//   }
+// }
+
+
 
   async function createNewHousehold() {
     setError("");
