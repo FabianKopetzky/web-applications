@@ -32,10 +32,16 @@
         "welcomeBack": "Welcome back,",
         "myHouseholds": "My households",
         "householdNamePlaceholder": "Enter household name",
-        "createHousehold": "Create new household:"
+        "createHousehold": "Create new household:",
+        "createHouseholdButton": "Create",
+        "householdMembers": "Members",
+        "householdOpen": "Open",
+        "householdDelete": "Delete",
+        "error": {
+            "householdNameEmpty": "Your household's name cannot be empty"
+        }
     },
     "household": {
-        "title": "Household",
         "choreTitle": "Open chores",
         "task": "Chore",
         "addTask": "Add chore",
@@ -46,14 +52,26 @@
         "actions": "Actions",
         "status": "Needs to be done until",
         "loggedInAs": "Logged in as",
+        "changeInfo": "Careful, you have unsaved changes. What do you want to do?",
+        "saveChanges": "Save changes",
+        "discardChanges": "Revert changes",
+        "memberList": "Household members",
+        "addUser": "Add user",
+        "addUserButton": "Add email",
         "error": {
             "taskName": "Please enter a chore name",
             "interval": "Interval must be at least one day",
-            "assignedUser": "A user must be assigned to the chore"
+            "assignedUser": "A user must be assigned to the chore",
+            "unsavedChangesAdd": "You have unsaved changes in the household. Please either save or discard them before adding a user!",
+            "unsavedChangesRemove": "You have unsaved changes in the household. Please either save or discard them before removing a user!",
+            "emptyMail": "Please enter an email address",
+            "alreadyMember": "This user is already a member of this household",
+            "emailGeneric": "Failed to add user. Verify that a user with this email exists and try again!"
         },
         "placeholder": {
             "task": "Chore title",
-            "description": "Chore description"
+            "description": "Chore description",
+            "email": "Email of user"
         },
         "addChore": "Add chore",
         "edit": "Edit",

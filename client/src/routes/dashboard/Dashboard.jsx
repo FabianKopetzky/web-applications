@@ -27,6 +27,8 @@ function Dashboard() {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
       async function loadUserData() {
 
@@ -59,6 +61,8 @@ function Dashboard() {
           setHouseholds([...response.data]);
         } catch(error) {
           console.log(error);
+        } finally {
+          setLoading(false);
         }
       }
 
@@ -70,7 +74,7 @@ function Dashboard() {
 
     const currentName = newHouseholdName.trim();
     if(currentName.length <= 0) {
-      setError("Your household's name cannot be empty");
+      setError(t('dashboard.error.householdNameEmpty'));
       return;
     }
 
@@ -117,7 +121,6 @@ function Dashboard() {
 
     } catch (err) {
       console.error("Failed to remove household:", err);
-      setError("Could not remove household");
     }
   }
   function openHousehold(household_id) {
@@ -134,7 +137,12 @@ function Dashboard() {
         onDelete={() => deleteHouseholdFromUser(household._id)}
         onClick={() => openHousehold(household._id)}
      />))}
-  </>)
+  </>);
+
+  // YOU CAN MAKE YOUR CUSTOM LOADING SCREEN HERE
+  if(loading) {
+    return (<p>{t('generic.loading')}</p>)
+  }
   
 
   return (
@@ -157,7 +165,7 @@ function Dashboard() {
             <h2>{t('dashboard.createHousehold')} {newHouseholdName}</h2>
             
             <input type="text" maxLength={20} placeholder={t('dashboard.householdNamePlaceholder')} value={newHouseholdName} onInput={e => setNewHouseholdName(e.target.value)}></input>
-            <button onClick={() => createNewHousehold()}>Create</button>
+            <button onClick={() => createNewHousehold()}>{t('dashboard.createHouseholdButton')}</button>
 
             <br></br>
 
