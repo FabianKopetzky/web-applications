@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const { ObjectId } = require('mongodb');
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
 
-const COLLECTION_NAME = 'users';
+const COLLECTION_NAME = 'user';
 
 router.get('/', async (req, res) => {
   try {

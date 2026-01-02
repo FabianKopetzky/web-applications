@@ -28,18 +28,24 @@
         "checkEmail": "Prüfe die Server Konsole für den Aktivierungslink."
     },
     "dashboard": {
-        "title": "Dashboard"
+        "title": "Dashboard",
+        "welcomeBack": "Willkommen zurück,",
+        "myHouseholds": "Meine Haushalte",
+        "householdNamePlaceholder": "Haushaltname eingeben",
+        "createHousehold": "Neuen Haushalt erstellen:"
     },
     "household": {
         "title": "Haushalt",
         "choreTitle": "Offene Aufgaben",
         "task": "Aufgabe",
+        "addTask": "Aufgabe hinzufügen",
         "description": "Beschreibung",
         "interval": "Intervall (in Tagen)",
         "lastDone": "Zuletzt erledigt",
         "assignedTo": "Zugeteilter Nutzer",
         "actions": "Aktionen",
         "status": "Muss erledigt werden bis",
+        "loggedInAs": "Eingeloggt als",
         "error": {
             "taskName": "Bitte gib einen Aufgabentitel ein",
             "interval": "Das Mindestintervall beträgt einen Tag",
@@ -56,7 +62,8 @@
     },
     "generic": {
         "changeLang": "Sprache ändern",
-        "optional": "(optional)"
+        "optional": "(optional)",
+        "loading": "Wird geladen..."
     },
     "error": {
         "notFound": "Route nicht gefunden",

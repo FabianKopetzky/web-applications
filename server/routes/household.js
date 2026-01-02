@@ -20,6 +20,20 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/from_user', async (req, res) => {
+  try {
+    const db = req.app.get('db');
+    const user_id = res.locals?.oauth?.token?.user?.user_id.toString();
+    console.log(user_id);
+
+    const all_from_user = await db.collection(COLLECTION_NAME).find({members: user_id}).toArray();
+    res.json(all_from_user);
+  } catch(error) {
+    console.error(error);
+    res.status(500).send();
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
     const db = req.app.get('db');
@@ -70,6 +84,11 @@ router.put('/:id', async (req, res) => {
     if (updated.modifiedCount === 1) {
       const toDo = await db.collection(COLLECTION_NAME)
         .findOne({ _id: new ObjectId(req.params.id) });
+
+        if (!toDo.members || toDo.members.length === 0) {
+          await db.collection(COLLECTION_NAME).deleteOne({ _id: toDo._id });
+          return res.status(200).json({ message: "Household deleted because it had no members" });
+        }
 
       if (toDo) {
         res.json(toDo);

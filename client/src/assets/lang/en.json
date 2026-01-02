@@ -18,7 +18,7 @@
         "button": "Register",
         "alreadyAccount": "Already have an account?"
     },
-        "activation": {
+    "activation": {
         "title": "Activate your account",
         "subtitle": "Start planning soon!",
         "placeholderName": "Firstname Lastname",
@@ -28,18 +28,24 @@
         "checkEmail": "Check the server console for the activation link."
     },
     "dashboard": {
-        "title": "Dashboard"
+        "title": "Dashboard",
+        "welcomeBack": "Welcome back,",
+        "myHouseholds": "My households",
+        "householdNamePlaceholder": "Enter household name",
+        "createHousehold": "Create new household:"
     },
     "household": {
         "title": "Household",
         "choreTitle": "Open chores",
         "task": "Chore",
+        "addTask": "Add chore",
         "description": "Description",
         "interval": "Interval (in days)",
         "lastDone": "Last done",
         "assignedTo": "Assigned user",
         "actions": "Actions",
         "status": "Needs to be done until",
+        "loggedInAs": "Logged in as",
         "error": {
             "taskName": "Please enter a chore name",
             "interval": "Interval must be at least one day",
@@ -56,7 +62,8 @@
     },
     "generic": {
         "changeLang": "Change language",
-        "optional": "(optional)"
+        "optional": "(optional)",
+        "loading": "Loading"
     },
     "error": {
         "notFound": "Route not found",
