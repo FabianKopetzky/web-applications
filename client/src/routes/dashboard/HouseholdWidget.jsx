@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import {Button} from "antd"
 
 function HouseholdWidget({houseHoldName, houseHoldID, memberCount, onClick, onDelete}) {
     
@@ -8,8 +9,8 @@ function HouseholdWidget({houseHoldName, houseHoldID, memberCount, onClick, onDe
         <div>
             <h4>{houseHoldName}</h4>
             <p>({t('dashboard.householdMembers')}: {memberCount})</p>
-            <button onClick={() => onClick(houseHoldID)}>{t('dashboard.householdOpen')}</button>
-            <button onClick={() => onDelete(houseHoldID)}>{t('dashboard.householdDelete')}</button>
+            <Button type="primary" onClick={() => onClick(houseHoldID)}>{t('dashboard.householdOpen')}</Button>
+            <Button type="dashed" danger onClick={() => onDelete(houseHoldID)}>{t('dashboard.householdDelete')}</Button>
         </div>
     </>)
 }

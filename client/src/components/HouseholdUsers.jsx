@@ -1,6 +1,8 @@
 import { useState } from "react"
 import api from "../services/api";
 import { useTranslation } from "react-i18next";
+import { Button } from "antd"
+import { PlusCircleOutlined } from '@ant-design/icons';
 
 export default function HouseholdUsers({onUserAdded, onUserDeleted, userIdList, hasUnsavedChanges, users, loggedInUserId}) {
 
@@ -75,7 +77,7 @@ export default function HouseholdUsers({onUserAdded, onUserDeleted, userIdList, 
             <p>{removeError}</p>
             <h2>{t('household.addUser')}</h2>
             <input type="text" placeholder={t('household.placeholder.email')} value={email} onInput={e => setEmail(e.target.value)} />
-            <button onClick={() => addUserToHousehold()}>{t('household.addUserButton')}</button>
+            <Button type="primary" icon={<PlusCircleOutlined />} onClick={() => addUserToHousehold()}>{t('household.addUserButton')}</Button>
             <p>{error}</p>
         </>
     )

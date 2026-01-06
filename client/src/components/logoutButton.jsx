@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom";
+import { Button } from "antd";
 
 export default function LogoutButton() {
   const navigate = useNavigate();
@@ -18,8 +19,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <button onClick={handleLogout} className="logout-button">
+      <Button type="primary" danger onClick={handleLogout}> 
       {t("login.logout")}
-    </button>
+    </Button>
   );
 }

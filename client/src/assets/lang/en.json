@@ -80,8 +80,9 @@
     },
     "generic": {
         "changeLang": "Change language",
-        "optional": "(optional)",
-        "loading": "Loading"
+        "optional": "optional",
+        "loading": "Loading",
+        "warning": "Warning!"
     },
     "error": {
         "notFound": "Route not found",

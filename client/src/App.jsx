@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import './App.css'
 import { LANGUAGE_STORAGE } from './main';
+import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 function App() {
 
@@ -13,12 +15,17 @@ function App() {
 
   return (
     <>
-      <a href="/register">{t('register.title')}</a> <br />
-      <a href="/login">{t('login.title')}</a>
+    <Link to={"/register"}>
+    <Button type='default'> {t('register.title')}</Button>
+    </Link>
+    <Link to={"/login"}>
+    <Button type='primary'> {t('login.title')}</Button>
+    </Link>
+
       <h1 className='text-center'>{ t('landing.appTitle') }</h1>
       <p className='text-center'>{ t('landing.greeting') }</p>
       <br />
-      <button onClick={() => changeLanguage()}>{ t('generic.changeLang') }</button>
+      <Button onClick={() => changeLanguage()}>{ t('generic.changeLang') }</Button>
     </>
   )
 }

@@ -8,6 +8,9 @@ import ChoreItem from "../../components/ChoreItem";
 import api from "../../services/api";
 import UserModel from "../../models/UserModel";
 import AddPeopleInput from "../../components/HouseholdUsers";
+import { Alert, Button, Space } from "antd";
+import { EditOutlined } from '@ant-design/icons';
+
 
 function HouseHold() {
 
@@ -204,13 +207,33 @@ function HouseHold() {
   }
 
   const changesPanel = (
-    <div>
+    // <div>
+    //   <p>{t('household.changeInfo')}</p>
+    //   <div className="flex flex-row gap-2">
+    //     <Button onClick={() => persistChanges()}>{t('household.saveChanges')}</Button>
+    //     <Button onClick={() => reloadData()}>{t('household.discardChanges')}</Button>
+    //   </div>
+    // </div>
+
+<Alert
+  message={t('generic.warning')}
+  description={
+    <Space direction="vertical">
       <p>{t('household.changeInfo')}</p>
-      <div className="flex flex-row gap-2">
-        <button onClick={() => persistChanges()}>{t('household.saveChanges')}</button>
-        <button onClick={() => reloadData()}>{t('household.discardChanges')}</button>
-      </div>
-    </div>
+      <Space>
+        <Button type="primary" onClick={() => persistChanges()}>
+          {t('household.saveChanges')}
+        </Button>
+        <Button onClick={() => reloadData()} danger>
+          {t('household.discardChanges')}
+        </Button>
+      </Space>
+    </Space>
+  }
+  type="warning"
+  showIcon
+/>
+
   );
 
   const tableContent = householdChores.map(task => 
@@ -240,7 +263,14 @@ function HouseHold() {
   (<div className="flex flex-row gap-2">
     <h1>{householdName}</h1>
     {/* button again has no translation as it may be replaced by icon? if not, sowwy :( */}
-    {isHouseHoldOwner() && (<button onClick={() => setEditingHouseholdName(true)}>Edit</button>)}
+    {isHouseHoldOwner() && (
+  <Button
+    type="text"
+    icon={<EditOutlined />}
+    onClick={() => setEditingHouseholdName(true)}
+  />
+)}
+
   </div>);
 
   const householdHeader = editingHouseholdName ? householdNameInput : householdNameTitle;
@@ -252,7 +282,7 @@ function HouseHold() {
       <h2>{t('household.loggedInAs')} {userModel?.fullName}</h2>
 
       {/* No translation because it will most likely be replaced with icon? if not, sorry  */}
-      <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+      <Button onClick={() => navigate("/dashboard")}>Dashboard</Button>
 
       <h2> {t('household.choreTitle')} </h2>
       <table>

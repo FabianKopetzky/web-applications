@@ -80,8 +80,9 @@
     },
     "generic": {
         "changeLang": "Sprache ändern",
-        "optional": "(optional)",
-        "loading": "Wird geladen..."
+        "optional": "optional",
+        "loading": "Wird geladen...",
+        "warning": "Achtung!"
     },
     "error": {
         "notFound": "Route nicht gefunden",
