@@ -1,9 +1,10 @@
 // TODO create model for HouseHold
 
 class HouseHoldModel {
-    constructor(householdName, tasks) {
+    constructor(householdName, tasks, members) {
         this.householdName = householdName; // string
         this.tasks = tasks; // array of HouseHoldTask[]
+        this.members = members; // array of object ids of the users
     }
 }
 

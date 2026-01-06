@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { HouseHoldTask } from "../models/HouseHoldModel";
 import { useTranslation } from "react-i18next";
 
-export default function ChoreItem({taskItem, onUpdate, onDelete}) {
+export default function ChoreItem({taskItem, userList, onUpdate, onDelete}) {
 
   const { t } = useTranslation();
 
@@ -109,6 +109,8 @@ export default function ChoreItem({taskItem, onUpdate, onDelete}) {
     setNewLastDone(today);
   }
 
+  const userOptions = userList.map(user => (<option value={user}>{user}</option>));
+
   return (
     <tr key={taskItem.key}>
       <td>
@@ -134,9 +136,8 @@ export default function ChoreItem({taskItem, onUpdate, onDelete}) {
       <td>
         <span className={editingAssignedUser ? 'hidden' : ''}>{ taskItem.assignedUser }</span>
         <select ref={assignedUserRef} className={editingAssignedUser ? '' : 'hidden'} onChange={e => setNewAssignedUser(e.target.value)} value={newAssignedUser} onBlur={() => updateField()}>
-          {/* FETCH ACTUAL USERS FROM DB, MAYBE HAVE PRODIVER FOR USERS */}
-          <option value="User1">User 1</option>
-          <option value="User2">User 2</option>
+          {/* FETCH ACTUAL USERS FROM DB */}
+          {userOptions}
         </select>
         <button onClick={() => setEditingAssignedUser(true)}>{ t('household.edit') }</button>
       </td>

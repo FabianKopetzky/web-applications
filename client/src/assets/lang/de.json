@@ -28,26 +28,50 @@
         "checkEmail": "Prüfe die Server Konsole für den Aktivierungslink."
     },
     "dashboard": {
-        "title": "Dashboard"
+        "title": "Dashboard",
+        "welcomeBack": "Willkommen zurück,",
+        "myHouseholds": "Meine Haushalte",
+        "householdNamePlaceholder": "Haushaltname eingeben",
+        "createHousehold": "Neuen Haushalt erstellen:",
+        "createHouseholdButton": "Erstellen",
+        "householdMembers": "Mitglieder",
+        "householdOpen": "Öffnen",
+        "householdDelete": "Entfernen",
+        "error": {
+            "householdNameEmpty": "Der Name deines Haushalts darf nicht leer sein"
+        }
     },
     "household": {
-        "title": "Haushalt",
         "choreTitle": "Offene Aufgaben",
         "task": "Aufgabe",
+        "addTask": "Aufgabe hinzufügen",
         "description": "Beschreibung",
         "interval": "Intervall (in Tagen)",
         "lastDone": "Zuletzt erledigt",
         "assignedTo": "Zugeteilter Nutzer",
         "actions": "Aktionen",
         "status": "Muss erledigt werden bis",
+        "loggedInAs": "Eingeloggt als",
+        "changeInfo": "Achtung, du hast ungespeicherte Änderungen! Was möchtest du tun?",
+        "saveChanges": "Änderungen speichern",
+        "discardChanges": "Änderungen verwerfen",
+        "memberList": "Mitglieder",
+        "addUser": "Nutzer hinzufügen",
+        "addUserButton": "E-Mail hinzufügen",
         "error": {
             "taskName": "Bitte gib einen Aufgabentitel ein",
             "interval": "Das Mindestintervall beträgt einen Tag",
-            "assignedUser": "Ein Nutzer muss zur Aufgabe zugeteilt sein"
+            "assignedUser": "Ein Nutzer muss zur Aufgabe zugeteilt sein",
+            "unsavedChangesAdd": "Du hast ungespeicherte Änderungen. Bitte speichere oder verwirf sie bevor du einen Nutzer hinzufügst!",
+            "unsavedChangesRemove": "Du hast ungespeicherte Änderungen. Bitte speichere oder verwirf sie bevor du einen Nutzer entfernst!",
+            "emptyMail": "Bitte gib eine E-Mail ein",
+            "alreadyMember": "Dieser Nutzer ist bereits Mitglied dieses Haushalts",
+            "emailGeneric": "Nutzer konnte nicht hinzugefügt werden. Stelle sicher, dass diese E-Mail korrekt ist und versuche es erneut!"
         },
         "placeholder": {
             "task": "Aufgabentitel",
-            "description": "Aufgabenbeschreibung"
+            "description": "Aufgabenbeschreibung",
+            "email": "Email des Nutzers"
         },
         "addChore": "Aufgabe hinzufügen",
         "edit": "Bearbeiten",
@@ -56,7 +80,8 @@
     },
     "generic": {
         "changeLang": "Sprache ändern",
-        "optional": "(optional)"
+        "optional": "(optional)",
+        "loading": "Wird geladen..."
     },
     "error": {
         "notFound": "Route nicht gefunden",

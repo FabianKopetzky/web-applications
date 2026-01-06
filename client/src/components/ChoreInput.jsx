@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function ChoreInput({onSubmit}) {
+export default function ChoreInput({onSubmit, userList}) {
 
     const { t } = useTranslation();
     
@@ -9,7 +9,7 @@ export default function ChoreInput({onSubmit}) {
     const [taskDescription, setTaskDescription] = useState('');
     const [interval, setInterval] = useState(1);
     const [lastDoneDate, setLastDoneDate] = useState('');
-    const [assignedUser, setAssignedUser] = useState('User1');
+    const [assignedUser, setAssignedUser] = useState(userList[0]);
 
     const [errors, setErrors] = useState([]);
 
@@ -41,12 +41,14 @@ export default function ChoreInput({onSubmit}) {
       setTaskDescription("");
       setInterval(1);
       setLastDoneDate("");
-      setAssignedUser('User1');
+      setAssignedUser(userList[0] ?? "User");
     }
 
     const errorList = (<ul>
       {errors.map(err => (<li>{err}</li>))}
     </ul>);
+
+    const userOptions = userList.map(user => (<option value={user}>{user}</option>));
 
     return (
         <div> 
@@ -70,12 +72,11 @@ export default function ChoreInput({onSubmit}) {
         <div>
           <label>{ t('household.assignedTo') }</label>
           <select onChange={e => setAssignedUser(e.target.value)} value={assignedUser}>
-            <option value="User1">User 1</option>
-            <option value="User2">User 2</option>
+            {userOptions}
           </select>
         </div>
 
-        <button onClick={() => submitChore()}>Add chore</button>
+        <button onClick={() => submitChore()}>{t('household.addTask')}</button>
 
         {errors.length > 0 && errorList}
       </div>

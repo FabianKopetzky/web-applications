@@ -1,18 +1,31 @@
 var express = require('express');
 var router = express.Router();
+const { ObjectId } = require('mongodb');
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
 
-const COLLECTION_NAME = 'users';
+const COLLECTION_NAME = 'user';
+const AUTH_COLLECTION_NAME = 'user_auth';
 
 router.get('/', async (req, res) => {
   try {
     const db = req.app.get('db');
     const all = await db.collection(COLLECTION_NAME).find({}).toArray();
     res.json(all);
+  } catch(error) {
+    console.error(error);
+    res.status(500).send();
+  }
+});
+
+router.get('/auth-by-email/:email', async (req, res) => {
+  try {
+    const db = req.app.get('db');
+    const authUser = await db.collection(AUTH_COLLECTION_NAME).findOne({username: req.params.email});
+    res.json(authUser.user_id.toString());
   } catch(error) {
     console.error(error);
     res.status(500).send();
