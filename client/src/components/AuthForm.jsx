@@ -75,6 +75,7 @@ export default function AuthForm({ mode }) {
     const [form] = Form.useForm();
     
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
 
   const [currentMode, setCurrentMode] = useState(mode || "login");
@@ -100,18 +101,12 @@ export default function AuthForm({ mode }) {
         .then(data => {
           form.setFieldsValue({ email: data.email });
         })
-        .catch(() => {});
+        .catch(() => {
+          setError(t("error.fetchUserFailed"));
+        });
 
     }
   }, [token, form]);
-
-  // const handleChange = (e) => {
-  //   setForm({ ...form, [e.target.name]: e.target.value });
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setMessage("");
 
   const onFinish = async (values) => {
     setError("");
@@ -119,59 +114,34 @@ export default function AuthForm({ mode }) {
 
     try {
       if (isLogin) {
-        // if (!form.email || !form.password) {
-        //   setMessage(t('error.emailRequired'));
-        //   return;
-        // }
-        // if (!isValidEmail(form.email)) {
-        //   setMessage(t('error.invalidEmail'));
-        //   return;
-        // }
-
         const data = await loginUser(values.email, values.password);
         localStorage.setItem("accessToken", data.access_token);
         localStorage.setItem("refreshToken", data.refresh_token);
+        setMessage(t("login.success"));
         navigate("/dashboard");
       }
 
       if (isRegister) {
-        // if (!form.email) {
-        //   setMessage(t('error.emailRequired'));
-        //   return;
-        // }
-        // if (!isValidEmail(form.email)) {
-        //   setMessage(t('error.invalidEmail'));
-        //   return;
-        // }
-
         await registerUser(values.email);
-        // alert(t('register.title') + " gestartet! " + t('activation.checkEmail'));
+        setMessage(t("register.checkEmail"))
       }
 
       if (isActivation) {
-        // if (!token) {
-        //   setMessage(t('error.activationTokenMissing'));
-        //   return;
-        // }
-        // if (!isStrongEnoughPassword(form.password)) {
-        //   setMessage(t('error.passwordTooShort'));
-        //   return;
-        // }
-        // if (form.password !== form.confirmPassword) {
-        //   setMessage(t('error.passwordsDontMatch'));
-        //   return;
-        // }
+        if (!token) throw new Error("error.activationTokenMissing"); 
 
         const [first_name, ...lastParts] = values.name.trim().split(" ");
         const last_name = lastParts.join(" ") || "";
 
         await completeRegistration(token, first_name, last_name, values.password);
-        // alert(t('activation.title') + " erfolgreich! " + t('login.pleaseLogin'));
+        setMessage(t("activation.success"));
         navigate("/login");
       }
     } catch (err) {
-      setMessage(t(err.message));
+      console.error(err);
+      setError(t(err.message || "error.unexpected"));
       // console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -225,7 +195,7 @@ export default function AuthForm({ mode }) {
             <Form.Item
               label={t("activation.placeholderName")}
               name="name"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: t("error.nameRequired") }]}
             >
               <Input />
             </Form.Item>
@@ -234,7 +204,7 @@ export default function AuthForm({ mode }) {
               label={t("activation.placeholderPassword")}
               name="password"
               rules={[
-                { required: true },
+                { required: true, message: t("error.passwordRequired") }, 
                 {
                   validator: (_, value) =>
                     isStrongEnoughPassword(value)
@@ -254,7 +224,7 @@ export default function AuthForm({ mode }) {
               dependencies={["password"]}
               hasFeedback
               rules={[
-                { required: true },
+                { required: true, message: t("error.confirmPasswordRequired") },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
@@ -276,14 +246,14 @@ export default function AuthForm({ mode }) {
           <Form.Item
             label={t("login.placeholderPassword")}
             name="password"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: t("error.passwordRequired") }]} 
           >
             <Input.Password />
           </Form.Item>
         )}
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" block>
+          <Button type="primary" htmlType="submit" block loading={loading}>
             {isLogin && t("login.button")}
             {isRegister && t("register.button")}
             {isActivation && t("activation.button")}
@@ -307,84 +277,7 @@ export default function AuthForm({ mode }) {
 
         
         
-        </Space>    </>
-
-    // <div className="auth-container">
-    //   <h1>
-    //     {isLogin && t('login.title')}
-    //     {isRegister && t('register.title')}
-    //     {isActivation && `${t('activation.title')} ${form.email || ""}`}
-    //   </h1>
-
-    //   {isActivation && <p>{t('activation.subtitle')}</p>}
-
-    //   {message && <p style={{ color: "red" }}>{message}</p>}
-
-    //   <form onSubmit={handleSubmit}>
-    //     {(isLogin || isRegister) && (
-    //       <input
-    //         type="email"
-    //         name="email"
-    //         placeholder={t('login.placeholderEmail')}
-    //         value={form.email}
-    //         onChange={handleChange}
-    //         required
-    //       />
-    //     )}
-
-    //     {isActivation && (
-    //       <>
-    //         <input
-    //           type="text"
-    //           name="name"
-    //           placeholder={t('activation.placeholderName')}
-    //           value={form.name}
-    //           onChange={handleChange}
-    //           required
-    //         />
-    //         <input
-    //           type="password"
-    //           name="password"
-    //           placeholder={t('activation.placeholderPassword')}
-    //           value={form.password}
-    //           onChange={handleChange}
-    //           required
-    //         />
-    //         <input
-    //           type="password"
-    //           name="confirmPassword"
-    //           placeholder={t('activation.placeholderConfirmPassword')}
-    //           value={form.confirmPassword}
-    //           onChange={handleChange}
-    //           required
-    //         />
-    //       </>
-    //     )}
-
-    //     {isLogin && (
-    //       <input
-    //         type="password"
-    //         name="password"
-    //         placeholder={t('login.placeholderPassword')}
-    //         value={form.password}
-    //         onChange={handleChange}
-    //         required
-    //       />
-    //     )}
-
-    //     <button type="submit">
-    //       {isLogin && t('login.button')}
-    //       {isRegister && t('register.button')}
-    //       {isActivation && t('activation.button')}
-    //     </button>
-    //   </form>
-
-    //   {isLogin && (
-    //     <p>{t('login.noAccount')} <a href="/register">{t('register.title')}</a></p>
-    //   )}
-    //   {isRegister && (
-    //     <p>{t('register.alreadyAccount')} <a href="/login">{t('login.title')}</a></p>
-    //   )}
-    // </div>
+        </Space>   
+         </>
   );
 }

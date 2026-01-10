@@ -8,7 +8,7 @@ function RegisterActivation() {
 
   return (
     <>
-      <h1 className="text-center">{t('register.title')}</h1>
+      {/* <h1 className="text-center">{t('register.title')}</h1> */}
       <AuthForm mode="activation" token={token} />
     </>
   );

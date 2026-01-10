@@ -1,13 +1,13 @@
 {
     "landing": {
-        "appTitle": "Organisier App",
+        "appTitle": "ToDue",
         "greeting": "Wir helfen dir, organisiert zu bleiben"
     },
     "login": {
         "title": "Anmelden",
         "placeholderEmail": "E-Mail",
         "placeholderPassword": "Passwort",
-        "button": "Anmelden",
+        "button": "Einloggen",
         "noAccount": "Noch keinen Account?",
         "pleaseLogin": "Bitte logge dich ein.",
         "logout": "Abmelden"
@@ -16,16 +16,18 @@
         "title": "Registrieren",
         "placeholderEmail": "E-Mail",
         "button": "Registrieren",
-        "alreadyAccount": "Schon einen Account?"
+        "alreadyAccount": "Haben Sie bereits einen Account?",
+        "checkEmail": "Registrierung erfolgreich! Bitte überprüfen Sie Ihre E-Mails, um Ihren Account zu aktivieren."
     },
     "activation": {
         "title": "Aktiviere deinen Account",
-        "subtitle": "Bald kann das Planen endlich losgehen!",
+        "subtitle": "Bald kann das Planen endlich losgehen! Bitte geben Sie Ihre Daten ein, um das Konto zu aktivieren.",
         "placeholderName": "Vorname Nachname",
         "placeholderPassword": "Passwort",
         "placeholderConfirmPassword": "Passwort bestätigen",
         "button": "Aktivieren",
-        "checkEmail": "Prüfe die Server Konsole für den Aktivierungslink."
+        "checkEmail": "Prüfe die Server Konsole für den Aktivierungslink.",
+        "success": "Ihr Konto wurde erfolgreich aktiviert! Bitte melden Sie sich an."
     },
     "dashboard": {
         "title": "Dashboard",
@@ -86,13 +88,18 @@
     },
     "error": {
         "notFound": "Route nicht gefunden",
-        "invalidEmail": "Ungültige E-Mail-Adresse",
         "emailRequired": "E-Mail ist erforderlich",
         "passwordTooShort": "Passwort muss mindestens 6 Zeichen lang sein",
         "passwordsDontMatch": "Passwörter stimmen nicht überein",
         "activationTokenMissing": "Aktivierungstoken fehlt",
-        "registrationFailed": "Registrierung fehlgeschlagen",
-        "activationFailed": "Aktivierung fehlgeschlagen",
-        "loginFailed": "Login fehlgeschlagen"
+        "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "passwordRequired": "Passwort ist erforderlich",
+        "confirmPasswordRequired": "Bitte bestätigen Sie Ihr Passwort",
+        "nameRequired": "Name ist erforderlich",
+        "fetchUserFailed": "Benutzerinformationen konnten nicht abgerufen werden",
+        "registrationFailed": "Registrierung fehlgeschlagen, bitte versuchen Sie es erneut",
+        "activationFailed": "Aktivierung fehlgeschlagen, bitte versuchen Sie es erneut",
+        "loginFailed": "Anmeldung fehlgeschlagen, bitte überprüfen Sie Ihre Zugangsdaten",
+        "unexpected": "Ein unerwarteter Fehler ist aufgetreten, bitte versuchen Sie es erneut"
     }
 }

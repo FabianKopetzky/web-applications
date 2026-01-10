@@ -1,6 +1,6 @@
 {
     "landing": {
-        "appTitle": "Organizer App",
+        "appTitle": "ToDue",
         "greeting": "We help you stay organized!"
     },
     "login": {
@@ -10,22 +10,25 @@
         "button": "Login",
         "noAccount": "Don't have an account?",
         "pleaseLogin": "Please log in.",
-        "logout": "Logout"
+        "logout": "Logout",
+        "success": "Login successful!"
     },
     "register": {
         "title": "Register",
         "placeholderEmail": "Email",
-        "button": "Register",
-        "alreadyAccount": "Already have an account?"
+        "button": "Sign up",
+        "alreadyAccount": "Already have an account?",
+        "checkEmail": "Registration successful! Please check your email to activate your account."
     },
     "activation": {
         "title": "Activate your account",
-        "subtitle": "Start planning soon!",
+        "subtitle": "Start planning soon! Please enter your details to activate your account",
         "placeholderName": "Firstname Lastname",
         "placeholderPassword": "Password",
         "placeholderConfirmPassword": "Confirm Password",
         "button": "Activate",
-        "checkEmail": "Check the server console for the activation link."
+        "checkEmail": "Check the server console for the activation link.",
+        "success": "Your account has been successfully activated! Please log in."
     },
     "dashboard": {
         "title": "Dashboard",
@@ -86,13 +89,18 @@
     },
     "error": {
         "notFound": "Route not found",
-        "invalidEmail": "Invalid email address",
+        "invalidEmail": "Please enter a valid email address",
         "emailRequired": "Email is required",
+        "passwordRequired": "Password is required",
         "passwordTooShort": "Password must be at least 6 characters long",
         "passwordsDontMatch": "Passwords do not match",
+        "confirmPasswordRequired": "Please confirm your password",
         "activationTokenMissing": "Activation token is missing",
-        "registrationFailed": "Registration failed",
-        "activationFailed": "Activation failed",
-        "loginFailed": "Login failed"
+        "nameRequired": "Name is required",
+        "fetchUserFailed": "Failed to fetch user information",
+        "registrationFailed": "Registration failed, please try again",
+        "activationFailed": "Activation failed, please try again",
+        "loginFailed": "Login failed, please check your credentials",
+        "unexpected": "An unexpected error occurred, please try again"
     }
 }
