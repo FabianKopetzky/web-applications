@@ -8,6 +8,8 @@ var OAuth2Server = require('express-oauth-server');
 var register = require('./routes/register');
 const oAuthModel = require('./oAuthModel');
 
+const drawLogo = require('./drawLogo');
+
 var MongoClient = require('mongodb').MongoClient;
 
 var userRouter = require('./routes/user');
@@ -118,8 +120,15 @@ const routes = async () => {
       res.status(err.status || 500);
       res.render('error');
     });
-  console.log(listEndpoints(app));
-    app.listen(port, () => console.log(`Household app listening on port ${port}`));
+
+    console.log("-------------------------------------------------")
+    console.log("EXPRESS ENDPOINTS")
+    console.log("-------------------------------------------------")
+    console.log(listEndpoints(app));
+
+    drawLogo();
+
+    app.listen(port, () => console.log(`ToDue listening on port ${port}`));
   } catch (err) {
     console.error(err);
   }
