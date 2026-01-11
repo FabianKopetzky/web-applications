@@ -1,7 +1,4 @@
 const { describe, test, expect } = require('@jest/globals');
-const router = require('./household');
-// const request = require('supertest');
-// const app = require('../app');
 
 // IMPORTANT!
 // some mocked household testing data was generated using chatgpt, but ensured it is 100% the same schema as the actual data in the database.
@@ -9,6 +6,11 @@ const router = require('./household');
 // Also, since JEST runs the actual function code for the GET route, when the catch block is tested, the console.log for the error runs and logs to the console when executing tests. For testing purposes, these logs were silenced.
 
 // The coverage report says that only a very small part of the household file is covered, but since the assignment specifies to at least test one GET and one POST route, I suppose it should only matter if the specified routes are tested with 100% coverage, which is the case
+
+// Supertest was intentionally not used. In this project, importing the app also starts the express server, which can cause side effects (pending asyncs or even just console logs) after tests have completed. This is generally considered bad practice unless server startup logic is separated from route definitions, which is not the case here. When we used supertest, we received errors that functions or console logs shouldn't be executed a second after the tests finished and the server was started and waiting to be closed manually.
+
+// To avoid starting the server for the tests, the routes are called directly with mocked req/res objects. This way, we could test the routes without actually starting the server.
+
 
 
 const mockedHouseholds = [
@@ -182,6 +184,7 @@ describe('POST /api/household', () => {
     members: ["aliceId", "bobId"]
   };
 
+  // Test if successful creation works
   test('returns 201 and the new item on success', async () => {
     const insertedId = "mockedId123";
     const findOneMock = jest.fn().mockResolvedValue({ ...mockHousehold, _id: insertedId });
@@ -214,7 +217,8 @@ describe('POST /api/household', () => {
     expect(res.json).toHaveBeenCalledWith({ ...mockHousehold, _id: insertedId });
   });
 
-  test('returns 404 if newItem is not found after insertion', async () => {
+  // Test if 404 if the insertion was acknowledged but item is not in the db
+  test('returns 404 if new item is not found after insertion', async () => {
     const insertOneMock = jest.fn().mockResolvedValue({
       acknowledged: true,
       insertedId: "someId"
@@ -242,6 +246,7 @@ describe('POST /api/household', () => {
     expect(res.send).toHaveBeenCalled();
   });
 
+  // Test error if insertion not acknowedged
   test('returns 500 if insertion is not acknowledged', async () => {
     const insertOneMock = jest.fn().mockResolvedValue({ acknowledged: false });
     const collectionMock = jest.fn().mockReturnValue({ insertOne: insertOneMock });
@@ -262,6 +267,7 @@ describe('POST /api/household', () => {
     expect(res.send).toHaveBeenCalled();
   });
 
+  // Test database error (catch block of try catch
   test('returns 500 on database exception (catch block)', async () => {
     const req = {
       app: {
@@ -274,7 +280,7 @@ describe('POST /api/household', () => {
       send: jest.fn()
     };
 
-    // Silence console.error for clean test output
+
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     await routeHandler(req, res);
