@@ -12,12 +12,16 @@ import LoggedIn from './components/LoggedIn.jsx';
 import Activate from './components/Activation.jsx';
 
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { initReactI18next, useTranslation } from 'react-i18next';
 import en from './assets/lang/en.json';
 import de from './assets/lang/de.json';
 import RegisterActivation from './routes/register/RegisterActivation.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
 import MinimalLayout from './layouts/MinimalLayout.jsx';
+import { ConfigProvider } from 'antd';
+import enUS from 'antd/locale/en_US';
+import deDE from 'antd/locale/de_DE';
+
 
 const LANGUAGE_STORAGE = 'currentLanguage';
 
@@ -36,6 +40,15 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
+function AntdI18nProvider({ children }) {
+  const { i18n } = useTranslation();
+
+  // Pick AntD locale dynamically based on i18next language
+  const locale = i18n.language === 'de' ? deDE : enUS;
+
+  return <ConfigProvider locale={locale}>{children}</ConfigProvider>;
+}
+
 
 //! USE THIS FOR BUILD
 const router = createBrowserRouter([
@@ -47,30 +60,12 @@ const router = createBrowserRouter([
         element: <App />,
         errorElement: <NotFound />,
       },
-
-      // {
-      //   path: 'dashboard',
-      //   element: (
-      //     <LoggedIn>
-      //       <Dashboard />
-      //     </LoggedIn>
-      //   ),
-      // },
-      // {
-      //   path: 'household/:id',
-      //   element: (
-      //     <LoggedIn>
-      //       <HouseHold />
-      //     </LoggedIn>
-      //   ),
-      // },
-
     ],
   },
   {
   element: (
     <LoggedIn>
-      <MainLayout isLoggedIn={true} contentPadding="2rem 4rem" maxWidth={1200} />
+      <MainLayout isLoggedIn={true} />
     </LoggedIn>
   ),
   children: [
@@ -128,7 +123,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AntdI18nProvider>
+      <RouterProvider router={router} />
+    </AntdI18nProvider>
   </StrictMode>
 );
 

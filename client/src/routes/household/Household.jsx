@@ -8,8 +8,10 @@ import ChoreItem from "../../components/ChoreItem";
 import api from "../../services/api";
 import UserModel from "../../models/UserModel";
 import AddPeopleInput from "../../components/HouseholdUsers";
-import { Alert, Button, Space } from "antd";
+import { Alert, Button, Space, Table } from "antd";
 import { EditOutlined } from '@ant-design/icons';
+import EditableCell from "../../components/EditableCell";
+
 
 
 function HouseHold() {
@@ -38,6 +40,8 @@ function HouseHold() {
   const [householdName, setHouseholdName] = useState("");
   const [newHouseholdName, setNewHouseholdName] = useState("");
   const houseHoldNameInput = useRef(null);
+  const [editing, setEditing] = useState({ key: null, field: null });
+
 
   async function reloadData() {
     setLoading(true);
@@ -275,6 +279,189 @@ function HouseHold() {
 
   const householdHeader = editingHouseholdName ? householdNameInput : householdNameTitle;
 
+
+
+const columns = [
+  {
+    title: t('household.task'),
+    dataIndex: 'taskName',
+    key: 'taskName',
+    ellipsis: true,
+    render: (_, record) => (
+      <EditableCell
+        value={record.taskName}
+        isEditing={editing.key === record.key && editing.field === 'taskName'}
+        onEdit={() => setEditing({ key: record.key, field: 'taskName' })}
+        onSave={(value) => {
+          updateTask(new HouseHoldTask(
+            value,
+            record.taskDescription,
+            record.interval,
+            record.lastDoneDate,
+            record.assignedUser,
+            record.key
+          ));
+          setEditing({ key: null, field: null });
+        }}
+      />
+    ),
+    sorter: (a, b) => a.taskName.localeCompare(b.taskName),
+    sortDirections: ['ascend', 'descend'],
+  },
+  {
+    title: t('household.description'),
+    dataIndex: 'taskDescription',
+    key: 'taskDescription',
+    ellipsis: true,
+    render: (_, record) => (
+      <EditableCell
+        value={record.taskDescription}
+        isEditing={editing.key === record.key && editing.field === 'taskDescription'}
+        onEdit={() => setEditing({ key: record.key, field: 'taskDescription' })}
+        onSave={(value) => {
+          updateTask(new HouseHoldTask(
+            record.taskName,
+            value,
+            record.interval,
+            record.lastDoneDate,
+            record.assignedUser,
+            record.key
+          ));
+          setEditing({ key: null, field: null });
+        }}
+      />
+    ),
+    sorter: (a, b) => a.taskDescription.localeCompare(b.taskDescription),
+    sortDirections: ['ascend', 'descend'],
+  },
+  {
+    title: t('household.interval'),
+    dataIndex: 'interval',
+    key: 'interval',
+    render: (_, record) => (
+      <EditableCell
+        value={record.interval}
+        inputType="number"
+        isEditing={editing.key === record.key && editing.field === 'interval'}
+        onEdit={() => setEditing({ key: record.key, field: 'interval' })}
+        onSave={(value) => {
+          updateTask(new HouseHoldTask(
+            record.taskName,
+            record.taskDescription,
+            Number(value),
+            record.lastDoneDate,
+            record.assignedUser,
+            record.key
+          ));
+          setEditing({ key: null, field: null });
+        }}
+      />
+    ),
+    sorter: (a, b) => a.interval - b.interval,
+    sortDirections: ['ascend', 'descend'],
+  },
+  {
+    title: t('household.lastDone'),
+    dataIndex: 'lastDoneDate',
+    key: 'lastDoneDate',
+    render: (_, record) => (
+      <EditableCell
+        value={record.lastDoneDate}
+        inputType="date"
+        isEditing={editing.key === record.key && editing.field === 'lastDoneDate'}
+        onEdit={() => setEditing({ key: record.key, field: 'lastDoneDate' })}
+        onSave={(value) => {
+          updateTask(new HouseHoldTask(
+            record.taskName,
+            record.taskDescription,
+            record.interval,
+            value,
+            record.assignedUser,
+            record.key
+          ));
+          setEditing({ key: null, field: null });
+        }}
+      />
+    ),
+    sorter: (a, b) => new Date(a.lastDoneDate) - new Date(b.lastDoneDate),
+    sortDirections: ['ascend', 'descend'],
+  },
+  {
+    title: t('household.assignedTo'),
+    dataIndex: 'assignedUser',
+    key: 'assignedUser',
+    ellipsis: true,
+    render: (_, record) => (
+      <EditableCell
+        value={record.assignedUser}
+        isEditing={editing.key === record.key && editing.field === 'assignedUser'}
+        inputType="select"
+        options={householdUsers}
+        onEdit={() => setEditing({ key: record.key, field: 'assignedUser' })}
+        onSave={(value) => {
+          updateTask(new HouseHoldTask(
+            record.taskName,
+            record.taskDescription,
+            record.interval,
+            record.lastDoneDate,
+            value,
+            record.key
+          ));
+          setEditing({ key: null, field: null });
+        }}
+      />
+    ),
+  },
+  {
+    title: t('household.actions'),
+    key: 'actions',
+    render: (_, record) => (
+      <Space>
+        <Button size="small" onClick={() => setEditing({ key: record.key, field: 'taskName' })}>
+          Edit
+        </Button>
+        <Button size="small" danger onClick={() => deleteTask(record.rawTask)}>
+          Delete
+        </Button>
+      </Space>
+    ),
+  },
+  {
+    title: t('household.status'),
+    key: 'status',
+    render: (_, record) => {
+      if (!record.lastDoneDate || !record.interval) return '-';
+      const due = new Date(record.lastDoneDate);
+      due.setDate(due.getDate() + Number(record.interval));
+      return due.toLocaleDateString();
+    },
+    sorter: (a, b) => {
+      const dateA = new Date(a.lastDoneDate || 0);
+      dateA.setDate(dateA.getDate() + Number(a.interval || 0));
+      const dateB = new Date(b.lastDoneDate || 0);
+      dateB.setDate(dateB.getDate() + Number(b.interval || 0));
+      return dateA - dateB;
+    },
+    sortDirections: ['ascend', 'descend'],
+  },
+];
+
+
+
+
+const data = householdChores.map(task => ({
+  key: task.key,
+  taskName: task.taskName,
+  taskDescription: task.description,
+  interval: task.interval,
+  lastDoneDate: task.lastDoneDate,
+  assignedUser: task.assignedUser,
+  rawTask: task // optional: keep original object for actions
+}));
+
+
+
+
   return (
     <>
       {householdHeader}
@@ -284,7 +471,21 @@ function HouseHold() {
       {/* No translation because it will most likely be replaced with icon? if not, sorry  */}
       <Button onClick={() => navigate("/dashboard")}>Dashboard</Button>
 
+
+
+
       <h2> {t('household.choreTitle')} </h2>
+
+      <Table
+      columns={columns}
+      dataSource={data}
+      // onChange={onChange}
+      showSorterTooltip={{ target: 'sorter-icon' }}
+      />
+
+      
+
+      
       <table>
         <thead>
           <tr>
@@ -318,7 +519,7 @@ function HouseHold() {
         loggedInUserId={user._id.toString()} 
       />}
 
-    </>
+</>
 
   )
 }
