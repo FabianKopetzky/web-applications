@@ -1,15 +1,13 @@
 import { useTranslation } from "react-i18next"
-import LogoutButton from "../../components/logoutButton";
 import HouseholdWidget from "./HouseholdWidget";
 import { useEffect, useState } from "react";
 import HouseHold from "../household/Household";
 import { HouseHoldModel } from "../../models/HouseHoldModel";
 import api from "../../services/api";
-import LoggedIn from "../../components/LoggedIn";
 import UserModel from "../../models/UserModel";
 import { useNavigate } from "react-router-dom";
-  import { Row, Col, Form, Input, Button, Typography, Alert, Spin, Space } from "antd";
-  import { LoadingOutlined } from '@ant-design/icons';
+  import { Row, Col, Form, Input, Button, Typography, Alert } from "antd";
+  import LoadingSpinner from "../../components/LoadingSpinner.jsx";
 
 const { Title, Text } = Typography;
 
@@ -146,22 +144,13 @@ function Dashboard() {
      />))}
   </>);
 
-  // YOU CAN MAKE YOUR CUSTOM LOADING SCREEN HERE
   if(loading) {
-    // return (<p>{t('generic.loading')}</p>)
-         return (
-        <>
-        <Space direction="vertical" size="large" style={{ width: "100%", textAlign: "center", marginTop: 50 }}>
-        <Spin indicator={<LoadingOutlined spin />} size="large" />
-        <Text>{t("generic.loading")}</Text>
-      </Space>
-      </> )
+    return <LoadingSpinner />
   }
   
 
   return (
     <div style={{ padding: "2rem" }}>
-      <LogoutButton />
       <Title level={1} style={{ textAlign: "center" }}>
         {t("dashboard.title")}
       </Title>
@@ -209,39 +198,6 @@ function Dashboard() {
         </Col>
       </Row>
     </div>
-
-    // <>
-    
-    //     <LogoutButton />
-    //     <h1 className='text-center'>{ t('dashboard.title') }</h1>
-
-    //     <h2 className="text-center">{t('dashboard.welcomeBack')} {userModel?.fullName}!</h2>
-
-    //     <div className="flex flex-row w-full justify-evenly">
-    //       <div>
-    //         {/* List of households */}
-    //         <h2>{t('dashboard.myHouseholds')}</h2>
-
-    //         {householdList}
-            
-    //       </div>
-    //       <div>
-    //         {/* create household form */}
-    //         <h2>{t('dashboard.createHousehold')} {newHouseholdName}</h2>
-            
-    //         <input type="text" maxLength={20} placeholder={t('dashboard.householdNamePlaceholder')} value={newHouseholdName} onInput={e => setNewHouseholdName(e.target.value)}></input>
-    //         <button onClick={() => createNewHousehold()}>{t('dashboard.createHouseholdButton')}</button>
-
-    //         <br></br>
-
-    //         <p>{error}</p>
-    //       </div>
-    //     </div>
-
-    //     {/* <button onClick={() => getCurrentUser()}>Test user</button> */}
-
-    //     {/* <p>{user.firstname}</p> */}
-    // </>
   )
 }
 

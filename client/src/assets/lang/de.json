@@ -55,8 +55,8 @@
         "status": "Muss erledigt werden bis",
         "loggedInAs": "Eingeloggt als",
         "changeInfo": "Achtung, du hast ungespeicherte Änderungen! Was möchtest du tun?",
-        "saveChanges": "Änderungen speichern",
-        "discardChanges": "Änderungen verwerfen",
+        "saveChanges": "Speichern",
+        "discardChanges": "Verwerfen",
         "memberList": "Mitglieder",
         "addUser": "Nutzer hinzufügen",
         "addUserButton": "E-Mail hinzufügen",
@@ -80,11 +80,17 @@
         "remove": "Löschen",
         "markDone": "Erledigt markieren"
     },
+    "user": {
+        "owner": "Besitzer"
+    },
     "generic": {
         "changeLang": "Sprache ändern",
         "optional": "optional",
         "loading": "Wird geladen...",
-        "warning": "Achtung!"
+        "warning": "Achtung!",
+        "remove": "Entfernen",
+        "showLess": "Weniger Anzeigen",
+        "showMore": "Mehr Anzeigen"
     },
     "error": {
         "notFound": "Route nicht gefunden",

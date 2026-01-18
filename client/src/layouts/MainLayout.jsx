@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const { Content, Footer } = Layout;
 
-export default function MainLayout({ isLoggedIn = false, maxWidth = 1200, contentPadding = "24px" }) {
+export default function MainLayout({ isLoggedIn = false, maxWidth = 1500, contentPadding = "24px" }) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Navbar isLoggedIn={isLoggedIn} />
@@ -21,7 +21,7 @@ export default function MainLayout({ isLoggedIn = false, maxWidth = 1200, conten
       </Content>
 
       <Footer style={{ textAlign: "center" }}>
-        © 2026 YourApp
+        © 2026 ToDue
       </Footer>
     </Layout>
   );

@@ -8,18 +8,13 @@ export default function LogoutButton() {
   const { t } = useTranslation();
 
   const handleLogout = () => {
-    // Clear tokens
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-
-    // Optional: call backend logout API if needed
-
-    // Redirect to login
     navigate("/login");
   };
 
   return (
-      <Button type="primary" danger onClick={handleLogout}> 
+      <Button variant="dashed" danger onClick={handleLogout}>
       {t("login.logout")}
     </Button>
   );

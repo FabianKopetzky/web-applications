@@ -81,11 +81,17 @@
         "remove": "Remove",
         "markDone": "Mark as done"
     },
+    "user": {
+        "owner": "Owner"
+    },
     "generic": {
         "changeLang": "Change language",
         "optional": "optional",
         "loading": "Loading",
-        "warning": "Warning!"
+        "warning": "Warning!",
+        "remove": "Remove",
+        "showLess": "Show less",
+        "showMore": "Show more"
     },
     "error": {
         "notFound": "Route not found",
