@@ -1,30 +1,30 @@
 // api.js - User Authorization
-var express = require('express');
-var ObjectId = require('mongodb').ObjectId;
+const express = require('express');
+// const ObjectId = require('mongodb').ObjectId;
 
-var router = express.Router();
+const router = express.Router();
 
 // middleware to check write access
-async function writeAccess(req, res, next) {
-  try {
-    var db = req.app.get('db');
-    // after `oauth.authenticate()`, token info is in res.locals.oauth.token
-    var user = await db.collection('user').findOne({ _id: res.locals?.oauth?.token?.user?.user_id });
+// async function writeAccess(req, res, next) {
+//   try {
+//     let db = req.app.get('db');
+//     // after `oauth.authenticate()`, token info is in res.locals.oauth.token
+//     let user = await db.collection('user').findOne({ _id: res.locals?.oauth?.token?.user?.user_id });
 
-    if (user?.permissions?.write) {
-      res.locals.user = user; // store user object for later use
-      next();
-    } else {
-      res.status(403).send();
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send();
-  }
-}
+//     if (user?.permissions?.write) {
+//       res.locals.user = user; // store user object for later use
+//       next();
+//     } else {
+//       res.status(403).send();
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send();
+//   }
+// }
 
-router.get("/getUser", async (req, res) => {
-    res.json(res.locals.user);
+router.get('/getUser', async (req, res) => {
+  res.json(res.locals.user);
 });
 
 

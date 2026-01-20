@@ -1,19 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-const listEndpoints = require("express-list-endpoints");
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var OAuth2Server = require('express-oauth-server');
-var register = require('./routes/register');
+const createError = require('http-errors');
+const express = require('express');
+const listEndpoints = require('express-list-endpoints');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const OAuth2Server = require('express-oauth-server');
+const register = require('./routes/register');
 const oAuthModel = require('./oAuthModel');
 
 const drawLogo = require('./drawLogo');
 
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-var userRouter = require('./routes/user');
-var householdRouter = require('./routes/household');
+const userRouter = require('./routes/user');
+const householdRouter = require('./routes/household');
 const api = require('./routes/api');;
 
 
@@ -21,7 +21,7 @@ const api = require('./routes/api');;
 
 require('dotenv').config();
 
-var app = express();
+const app = express();
 
 const port = process.env.PORT || 3000;
 
@@ -46,10 +46,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // in OAuth2 standard, credentials are sent as "application/x-www-form-urlencoded", this middleware allows parsing it
 
 async function getUser(req, res, next) {
-    var db = req.app.get('db');
-    var user = await db.collection('user').findOne({ _id: res.locals?.oauth?.token?.user?.user_id });
-    res.locals.user = user;
-    next();
+  let db = req.app.get('db');
+  let user = await db.collection('user').findOne({ _id: res.locals?.oauth?.token?.user?.user_id });
+  res.locals.user = user;
+  next();
 }
 
 // async function getUser(req, res, next) {
@@ -111,7 +111,7 @@ const routes = async () => {
     });
 
     // error handler
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
       // set locals, only providing error in development
       res.locals.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -121,9 +121,9 @@ const routes = async () => {
       res.render('error');
     });
 
-    console.log("-------------------------------------------------")
-    console.log("EXPRESS ENDPOINTS")
-    console.log("-------------------------------------------------")
+    console.log('-------------------------------------------------');
+    console.log('EXPRESS ENDPOINTS');
+    console.log('-------------------------------------------------');
     console.log(listEndpoints(app));
 
     drawLogo();

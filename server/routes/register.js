@@ -1,6 +1,6 @@
 // register.js
-var express = require('express');
-var bcrypt = require('bcrypt');
+const express = require('express');
+const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
@@ -8,7 +8,6 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const db = req.app.get('db');
-    // TODO: validate req.body (email)
     const { email } = req.body;
 
     if (!email || typeof email !== 'string' || !email.includes('@')) {
@@ -65,8 +64,8 @@ router.put('/:token', async (req, res) => {
 
       if (insertion.acknowledged) {
         const updated = await db.collection('user_auth').updateOne({ _id: token.user_id }, { $set: {
-         password: await bcrypt.hash(req.body.password, 10),
-          user_id: insertion.insertedId
+          password: await bcrypt.hash(req.body.password, 10),
+          user_id: insertion.insertedId,
         } });
         if (updated.modifiedCount === 1) {
           await db.collection('token').deleteOne({ emailToken: req.params.token });

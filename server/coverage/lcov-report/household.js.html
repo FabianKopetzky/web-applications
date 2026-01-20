@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.74% </span>
+                <span class="strong">40.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/135</span>
+                <span class='fraction'>55/137</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.74% </span>
+                <span class="strong">40.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>55/135</span>
+                <span class='fraction'>55/137</span>
             </div>
         
             
@@ -198,7 +198,9 @@
 <a name='L133'></a><a href='#L133'>133</a>
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -313,29 +315,31 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
 const { ObjectId } = require('mongodb');
-var router = express.Router();
+const router = express.Router();
 &nbsp;
 const COLLECTION_NAME = 'households';
 &nbsp;
@@ -408,16 +412,18 @@ router.put('/:id', async (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >    const updateData = req.body;</span>
 <span class="cstat-no" title="statement not covered" >    delete updateData._id;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const updated = await db.collection(COLLECTION_NAME)</span>
+<span class="cstat-no" title="statement not covered" >    // const updated = await db.collection(COLLECTION_NAME)</span>
+<span class="cstat-no" title="statement not covered" >    //   .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });</span>
+<span class="cstat-no" title="statement not covered" >    await db.collection(COLLECTION_NAME)</span>
 <span class="cstat-no" title="statement not covered" >      .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const toDo = await db.collection(COLLECTION_NAME)</span>
 <span class="cstat-no" title="statement not covered" >      .findOne({ _id: new ObjectId(req.params.id) });</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      if (!toDo.members || toDo.members.length === 0) {</span>
-<span class="cstat-no" title="statement not covered" >        await db.collection(COLLECTION_NAME).deleteOne({ _id: toDo._id });</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(200).json({ message: "Household deleted because it had no members" });</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    if (!toDo.members || toDo.members.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >      await db.collection(COLLECTION_NAME).deleteOne({ _id: toDo._id });</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(200).json({ message: 'Household deleted because it had no members' });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (toDo) {</span>
 <span class="cstat-no" title="statement not covered" >      res.json(toDo);</span>
@@ -475,7 +481,7 @@ module.exports = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-11T10:41:36.194Z
+                at 2026-01-20T10:37:16.129Z
             </div>
         <script src="prettify.js"></script>
         <script>

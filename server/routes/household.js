@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const { ObjectId } = require('mongodb');
-var router = express.Router();
+const router = express.Router();
 
 const COLLECTION_NAME = 'households';
 
@@ -73,16 +73,18 @@ router.put('/:id', async (req, res) => {
     const updateData = req.body;
     delete updateData._id;
 
-    const updated = await db.collection(COLLECTION_NAME)
+    // const updated = await db.collection(COLLECTION_NAME)
+    //   .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+    await db.collection(COLLECTION_NAME)
       .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
 
     const toDo = await db.collection(COLLECTION_NAME)
       .findOne({ _id: new ObjectId(req.params.id) });
 
-      if (!toDo.members || toDo.members.length === 0) {
-        await db.collection(COLLECTION_NAME).deleteOne({ _id: toDo._id });
-        return res.status(200).json({ message: "Household deleted because it had no members" });
-      }
+    if (!toDo.members || toDo.members.length === 0) {
+      await db.collection(COLLECTION_NAME).deleteOne({ _id: toDo._id });
+      return res.status(200).json({ message: 'Household deleted because it had no members' });
+    }
 
     if (toDo) {
       res.json(toDo);
