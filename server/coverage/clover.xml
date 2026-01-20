@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768128096217" clover="3.2.0">
-  <project timestamp="1768128096217" name="All files">
-    <metrics statements="135" coveredstatements="55" conditionals="9" coveredconditionals="9" methods="0" coveredmethods="0" elements="144" coveredelements="64" complexity="0" loc="135" ncloc="135" packages="1" files="1" classes="1"/>
+<coverage generated="1768905436231" clover="3.2.0">
+  <project timestamp="1768905436231" name="All files">
+    <metrics statements="137" coveredstatements="55" conditionals="9" coveredconditionals="9" methods="0" coveredmethods="0" elements="146" coveredelements="64" complexity="0" loc="137" ncloc="137" packages="1" files="1" classes="1"/>
     <file name="household.js" path="C:\Users\fabia\Desktop\Daten\Hagenberg\5. Semester\web-applications\web-applications\server\routes\household.js">
-      <metrics statements="135" coveredstatements="55" conditionals="9" coveredconditionals="9" methods="0" coveredmethods="0"/>
+      <metrics statements="137" coveredstatements="55" conditionals="9" coveredconditionals="9" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -119,11 +119,11 @@
       <line num="113" count="0" type="stmt"/>
       <line num="114" count="0" type="stmt"/>
       <line num="115" count="0" type="stmt"/>
-      <line num="116" count="1" type="stmt"/>
-      <line num="117" count="1" type="stmt"/>
+      <line num="116" count="0" type="stmt"/>
+      <line num="117" count="0" type="stmt"/>
       <line num="118" count="1" type="stmt"/>
-      <line num="119" count="0" type="stmt"/>
-      <line num="120" count="0" type="stmt"/>
+      <line num="119" count="1" type="stmt"/>
+      <line num="120" count="1" type="stmt"/>
       <line num="121" count="0" type="stmt"/>
       <line num="122" count="0" type="stmt"/>
       <line num="123" count="0" type="stmt"/>
@@ -136,9 +136,11 @@
       <line num="130" count="0" type="stmt"/>
       <line num="131" count="0" type="stmt"/>
       <line num="132" count="0" type="stmt"/>
-      <line num="133" count="1" type="stmt"/>
-      <line num="134" count="1" type="stmt"/>
+      <line num="133" count="0" type="stmt"/>
+      <line num="134" count="0" type="stmt"/>
       <line num="135" count="1" type="stmt"/>
+      <line num="136" count="1" type="stmt"/>
+      <line num="137" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>

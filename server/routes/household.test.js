@@ -15,78 +15,79 @@ const { describe, test, expect } = require('@jest/globals');
 
 const mockedHouseholds = [
   {
-    householdName: "Sunny Villa",
+    householdName: 'Sunny Villa',
     tasks: [
       {
-        taskName: "Clean Kitchen",
-        taskDescription: "Wipe counters, mop floor, and clean sink",
+        taskName: 'Clean Kitchen',
+        taskDescription: 'Wipe counters, mop floor, and clean sink',
         interval: 2,
-        lastDoneDate: "2026-01-05",
-        assignedUser: "Alice",
-        key: "taskKey001"
+        lastDoneDate: '2026-01-05',
+        assignedUser: 'Alice',
+        key: 'taskKey001',
       },
       {
-        taskName: "Take Out Trash",
-        taskDescription: "Collect all garbage and recycling",
+        taskName: 'Take Out Trash',
+        taskDescription: 'Collect all garbage and recycling',
         interval: 1,
-        lastDoneDate: "2026-01-06",
-        assignedUser: "Bob",
-        key: "taskKey002"
-      }
+        lastDoneDate: '2026-01-06',
+        assignedUser: 'Bob',
+        key: 'taskKey002',
+      },
     ],
-    members: ["aliceId", "bobId", "charlieId"]
+    members: ['aliceId', 'bobId', 'charlieId'],
   },
   {
-    householdName: "Cozy Cottage",
+    householdName: 'Cozy Cottage',
     tasks: [
       {
-        taskName: "Water Plants",
-        taskDescription: "Water all indoor plants",
+        taskName: 'Water Plants',
+        taskDescription: 'Water all indoor plants',
         interval: 3,
-        lastDoneDate: "2026-01-04",
-        assignedUser: "Charlie",
-        key: "taskKey003"
-      }
+        lastDoneDate: '2026-01-04',
+        assignedUser: 'Charlie',
+        key: 'taskKey003',
+      },
     ],
-    members: ["charlieId", "daveId"]
+    members: ['charlieId', 'daveId'],
   },
   {
-    householdName: "Modern Apartment",
+    householdName: 'Modern Apartment',
     tasks: [
       {
-        taskName: "Vacuum Living Room",
-        taskDescription: "Vacuum carpets and rugs in living area",
+        taskName: 'Vacuum Living Room',
+        taskDescription: 'Vacuum carpets and rugs in living area',
         interval: 7,
-        lastDoneDate: "2026-01-03",
-        assignedUser: "Eve",
-        key: "taskKey004"
+        lastDoneDate: '2026-01-03',
+        assignedUser: 'Eve',
+        key: 'taskKey004',
       },
       {
-        taskName: "Dust Shelves",
-        taskDescription: "Dust all shelves and furniture",
+        taskName: 'Dust Shelves',
+        taskDescription: 'Dust all shelves and furniture',
         interval: 7,
-        lastDoneDate: "2026-01-02",
-        assignedUser: "Frank",
-        key: "taskKey005"
-      }
+        lastDoneDate: '2026-01-02',
+        assignedUser: 'Frank',
+        key: 'taskKey005',
+      },
     ],
-    members: ["eveId", "frankId", "georgeId"]
+    members: ['eveId', 'frankId', 'georgeId'],
   },
   {
-    householdName: "Family House",
+    householdName: 'Family House',
     tasks: [
       {
-        taskName: "Mow Lawn",
-        taskDescription: "Trim grass in front and backyard",
+        taskName: 'Mow Lawn',
+        taskDescription: 'Trim grass in front and backyard',
         interval: 14,
-        lastDoneDate: "2026-01-01",
-        assignedUser: "Hannah",
-        key: "taskKey006"
-      }
+        lastDoneDate: '2026-01-01',
+        assignedUser: 'Hannah',
+        key: 'taskKey006',
+      },
     ],
-    members: ["hannahId", "ianId", "jackId", "charlieId"]
-  }
+    members: ['hannahId', 'ianId', 'jackId', 'charlieId'],
+  },
 ];
+
 
 describe('GET /api/household/from_user', () => {
   test('returns households where currently logged in user is a member', async () => {
@@ -96,13 +97,13 @@ describe('GET /api/household/from_user', () => {
     const collectionMock = jest.fn().mockReturnValue({ find: findMock });
 
     const mockDb = {
-      collection: collectionMock
+      collection: collectionMock,
     };
 
     const req = {
       app: {
-        get: jest.fn().mockReturnValue(mockDb)
-      }
+        get: jest.fn().mockReturnValue(mockDb),
+      },
     };
 
     const res = {
@@ -110,20 +111,20 @@ describe('GET /api/household/from_user', () => {
         oauth: {
           token: {
             user: {
-              user_id: "charlieId" // Charlie is part of 3 of 4 test households
-            }
-          }
-        }
+              user_id: 'charlieId', // Charlie is part of 3 of 4 test households
+            },
+          },
+        },
       },
       json: jest.fn(),
       status: jest.fn().mockReturnThis(),
-      send: jest.fn()
+      send: jest.fn(),
     };
 
     const router = require('./household');
 
     const routeHandler = router.stack.find(
-      r => r.route?.path === '/from_user'
+      r => r.route?.path === '/from_user',
     ).route.stack[0].handle;
 
     await routeHandler(req, res);
@@ -139,20 +140,20 @@ describe('GET /api/household/from_user', () => {
       app: {
         get: jest.fn(() => {
           throw new Error('DB failure');
-        })
-      }
+        }),
+      },
     };
 
     const res = {
       locals: {},
       json: jest.fn(),
       status: jest.fn().mockReturnThis(),
-      send: jest.fn()
+      send: jest.fn(),
     };
 
     const router = require('./household');
     const routeHandler = router.stack.find(
-      r => r.route?.path === '/from_user'
+      r => r.route?.path === '/from_user',
     ).route.stack[0].handle;
 
 
@@ -174,39 +175,39 @@ describe('POST /api/household', () => {
   beforeAll(() => {
     router = require('./household');
     routeHandler = router.stack.find(
-      r => r.route?.path === '/' && r.route?.methods.post
+      r => r.route?.path === '/' && r.route?.methods.post,
     ).route.stack[0].handle;
   });
 
   const mockHousehold = {
-    householdName: "Sunny Villa",
+    householdName: 'Sunny Villa',
     tasks: [],
-    members: ["aliceId", "bobId"]
+    members: ['aliceId", "bobId'],
   };
 
   // Test if successful creation works
   test('returns 201 and the new item on success', async () => {
-    const insertedId = "mockedId123";
+    const insertedId = 'mockedId123';
     const findOneMock = jest.fn().mockResolvedValue({ ...mockHousehold, _id: insertedId });
     const insertOneMock = jest.fn().mockResolvedValue({
       acknowledged: true,
-      insertedId: insertedId
+      insertedId: insertedId,
     });
 
     const collectionMock = jest.fn().mockReturnValue({
       insertOne: insertOneMock,
-      findOne: findOneMock
+      findOne: findOneMock,
     });
 
     const req = {
       body: mockHousehold,
-      app: { get: jest.fn().mockReturnValue({ collection: collectionMock }) }
+      app: { get: jest.fn().mockReturnValue({ collection: collectionMock }) },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
-      send: jest.fn()
+      send: jest.fn(),
     };
 
     await routeHandler(req, res);
@@ -221,23 +222,23 @@ describe('POST /api/household', () => {
   test('returns 404 if new item is not found after insertion', async () => {
     const insertOneMock = jest.fn().mockResolvedValue({
       acknowledged: true,
-      insertedId: "someId"
+      insertedId: 'someId',
     });
     const findOneMock = jest.fn().mockResolvedValue(null); // Simulate not found
 
     const collectionMock = jest.fn().mockReturnValue({
       insertOne: insertOneMock,
-      findOne: findOneMock
+      findOne: findOneMock,
     });
 
     const req = {
       body: mockHousehold,
-      app: { get: jest.fn().mockReturnValue({ collection: collectionMock }) }
+      app: { get: jest.fn().mockReturnValue({ collection: collectionMock }) },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn()
+      send: jest.fn(),
     };
 
     await routeHandler(req, res);
@@ -253,12 +254,12 @@ describe('POST /api/household', () => {
 
     const req = {
       body: mockHousehold,
-      app: { get: jest.fn().mockReturnValue({ collection: collectionMock }) }
+      app: { get: jest.fn().mockReturnValue({ collection: collectionMock }) },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn()
+      send: jest.fn(),
     };
 
     await routeHandler(req, res);
@@ -271,13 +272,13 @@ describe('POST /api/household', () => {
   test('returns 500 on database exception (catch block)', async () => {
     const req = {
       app: {
-        get: jest.fn(() => { throw new Error('DB Down'); })
-      }
+        get: jest.fn(() => { throw new Error('DB Down'); }),
+      },
     };
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn()
+      send: jest.fn(),
     };
 
 
