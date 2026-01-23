@@ -1,5 +1,3 @@
-// TODO create model for HouseHold
-
 class HouseHoldModel {
     constructor(householdName, tasks, members) {
         this.householdName = householdName; // string

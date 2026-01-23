@@ -708,19 +708,15 @@ function HouseHold() {
 
     return (
         <>
-            {/*<Button onClick={() => navigate("/dashboard")} icon={<ArrowLeftOutlined/>}> Dashboard</Button>*/}
 
             {householdHeader}
             <h2>{t('household.loggedInAs')} {userModel?.fullName}</h2>
-            {/*<h2>{t('household.choreTitle')}</h2>*/}
 
 
             {/* Responsive layout: form + table */}
             <Row gutter={[16, 16]}>
                 <Col xs={24} md={6}>
-                    {/*<Card title="Add New Task">*/}
                         <ChoreInput onSubmit={addTask} userList={householdUsers}/>
-                    {/*</Card>*/}
                 </Col>
 
 
@@ -733,7 +729,7 @@ function HouseHold() {
                             size="small"
                             pagination={{
                                 defaultPageSize: 7,
-                                showSizeChanger: true, // This MUST be true for the dropdown to appear
+                                showSizeChanger: true,
                                 pageSizeOptions: ['7', '14', '21', '50'],
                                 showTotal: (total, range) => t('household.paginationTotal', {
                                     range0: range[0],
@@ -767,26 +763,13 @@ function HouseHold() {
                                             }}
                                         />
                                     </div>
-                                ), // End of expandedRowRender
+                                ),
                                 rowExpandable: (record) => true,
-                            }} // End of expandable object
-                        /> {/* End of Table */}
+                            }}
+                        />
                     </Card>
                 </Col>
             </Row>
-
-
-            {/*{changesMade && openWarningNotification()}*/}
-
-
-            {/*{isHouseHoldOwner() && <AddPeopleInput*/}
-            {/*    onUserAdded={onUserAdded}*/}
-            {/*    onUserDeleted={onUserRemoved}*/}
-            {/*    userIdList={houseHold.members}*/}
-            {/*    hasUnsavedChanges={changesMade}*/}
-            {/*    users={userMap}*/}
-            {/*    loggedInUserId={user._id.toString()}*/}
-            {/*/>}*/}
 
             {isHouseHoldOwner() && (
                 <Card bordered style={{ margin: '20px auto' }}>
@@ -800,9 +783,7 @@ function HouseHold() {
                     />
                 </Card>
             )}
-
         </>
-
     )
 }
 

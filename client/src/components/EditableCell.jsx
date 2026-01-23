@@ -19,14 +19,10 @@ export default function EditableCell({
 
   return (
     <div style={{ display: "flex", alignItems: "center", width: "100%", gap: "0.5rem" }}>
-      {/* Text / input area */}
       {!isEditing && (
         <span
           style={{
             flex: 1,
-            // overflow: "hidden",
-            // textOverflow: "ellipsis",
-            // whiteSpace: "nowrap",
           }}
           title={value} // shows full text on hover
         >
@@ -55,7 +51,7 @@ export default function EditableCell({
           value={value ? dayjs(value) : null}
           onChange={(date, dateString) => onSave(dateString)}
           onOpenChange={(open) => {
-            if (!open) inputRef.current?.blur?.(); // finish edit when picker closes
+            if (!open) inputRef.current?.blur?.();
           }}
           style={{ flex: 1 }}
         />
@@ -71,7 +67,6 @@ export default function EditableCell({
         />
       )}
 
-      {/* Edit button always visible */}
       <Button type="text" icon={<EditOutlined />} onClick={onEdit} />
     </div>
   );

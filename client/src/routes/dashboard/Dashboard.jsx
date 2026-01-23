@@ -19,7 +19,6 @@ function Dashboard() {
 
   const { t } = useTranslation();
 
-  // const [newHouseholdName, setNewHouseholdName] = useState('');
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
   const [userModel, setUserModel] = useState(null);

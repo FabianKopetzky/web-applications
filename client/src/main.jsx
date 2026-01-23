@@ -9,7 +9,6 @@ import Register from './routes/register/Register.jsx';
 import Dashboard from './routes/dashboard/Dashboard.jsx';
 import HouseHold from './routes/household/Household.jsx';
 import LoggedIn from './components/LoggedIn.jsx';
-import Activate from './components/Activation.jsx';
 
 import {ConfigProvider} from "antd";
 

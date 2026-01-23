@@ -6,7 +6,6 @@ function Login() {
   const { t } = useTranslation();
   return (
     <>
-      {/* <h1 className='text-center'>{ t('login.title') }</h1> */}
       <AuthForm mode="login" />
     </>
   )

@@ -1,5 +1,3 @@
-// TODO create model for User, please modify as needed for lesson
-
 export default class UserModel {
     constructor(id, first_name, last_name, permissions) {
         this.id = id;
