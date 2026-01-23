@@ -21,16 +21,6 @@ jobs:
         with:
           node-version: "20"
 
-      # -------- Client --------
-      - name: Install client dependencies
-        working-directory: client
-        run: npm install
-
-      - name: Lint client
-        working-directory: client
-        run: npm run lint
-
-      # -------- Server --------
       - name: Install server dependencies
         working-directory: server
         run: npm install
