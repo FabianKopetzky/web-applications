@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   pull_request:
@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: ESLint
+  ci:
+    name: Lint & Test
     runs-on: ubuntu-latest
 
     steps:
@@ -21,19 +21,24 @@ jobs:
         with:
           node-version: "20"
 
-      - run: npm install
-      - run: npm run lint
+      # -------- Client --------
+      - name: Install client dependencies
+        working-directory: client
+        run: npm install
 
-  test:
-    name: Unit Tests
-    runs-on: ubuntu-latest
+      - name: Lint client
+        working-directory: client
+        run: npm run lint
 
-    steps:
-      - uses: actions/checkout@v4
+      # -------- Server --------
+      - name: Install server dependencies
+        working-directory: server
+        run: npm install
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Lint server
+        working-directory: server
+        run: npm run lint
 
-      - run: npm install
-      - run: npm run test
+      - name: Test server
+        working-directory: server
+        run: npm test
