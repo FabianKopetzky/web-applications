@@ -3,12 +3,11 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Button, Alert, Typography, Space } from "antd";
 
-
 const isValidEmail = (email) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const isStrongEnoughPassword = (password) =>
-  password.length >= 6;
+  password.length >= 8;
 
 const { Title, Text } = Typography;
 
@@ -68,6 +67,8 @@ async function loginUser(email, password) {
 ============================================ */
 
 export default function AuthForm({ mode }) {
+  const [emailForTitle, setEmailForTitle] = useState("");
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const params = useParams();
@@ -91,20 +92,24 @@ export default function AuthForm({ mode }) {
   const isRegister = currentMode === "register";
   const isActivation = currentMode === "activation";
 
+
   useEffect(() => {
     if (token) {
       setCurrentMode("activation");
 
-
       fetch(`/api/register/${token}`)
-        .then(res => res.json())
-        .then(data => {
-          form.setFieldsValue({ email: data.email });
-        })
-        .catch(() => {
-          setError(t("error.fetchUserFailed"));
-        });
-
+          .then(res => {
+            if (!res.ok) throw new Error();
+            return res.json();
+          })
+          .then(data => {
+            console.log("API Response:", data);
+            form.setFieldsValue({ email: data.email });
+            setEmailForTitle(data.email);
+          })
+          .catch(() => {
+            setError(t("error.activationLinkInvalid"));
+          });
     }
   }, [token, form]);
 
@@ -156,7 +161,14 @@ export default function AuthForm({ mode }) {
       <Title level={2}>
         {isLogin && t("login.title")}
         {isRegister && t("register.title")}
-        {isActivation && `${t("activation.title")} ${form.getFieldValue("email") || ""}`}
+        {isActivation && (
+            <span>
+      {t("activation.creatingAccountFor")} <br />
+      <Text type="primary" style={{ fontSize: 'inherit' }}>
+        {emailForTitle || "..."}
+      </Text>
+    </span>
+        )}
       </Title>
 
       {isActivation && (
@@ -164,6 +176,15 @@ export default function AuthForm({ mode }) {
       )}
 
       {error && <Alert type="error" message={error} showIcon />}
+      {/* Add this right below your error Alert */}
+      {message && (
+          <Alert
+              type="success"
+              message={message}
+              showIcon
+              style={{ marginBottom: '1rem' }}
+          />
+      )}
 
       <Form
         form={form}

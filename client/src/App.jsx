@@ -21,40 +21,41 @@ function App() {
                 className="min-h-[70vh] flex items-center justify-center px-6">
                 <div className="max-w-3xl text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-                        Keep your household tasks
-                        <span className="text-blue-600"> perfectly in sync</span>
+                        {t("home.hero.title")}
+                        <span className="text-blue-600">{t("home.hero.sync")}</span>
                     </h1>
 
 
                     <p className="text-lg text-slate-600 mb-8">
-                        ToDue helps households stay organized by tracking recurring tasks,
-                        due dates, and responsibilities — so nothing gets forgotten.
+                        {t("home.hero.description")}
                     </p>
 
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-                        <Button type="primary" size="large">
-                            Get Started
+                        <Button href={"/login"} type="primary" size="large">
+                            {t("home.actions.getStarted")}
                         </Button>
-                        <Button size="large">View Demo</Button>
+                        <Button href={"/login"} type="default" size="large">
+                            {t("home.actions.viewDemo")}
+                        </Button>
                     </div>
 
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
                         <Feature
                             icon={<TeamOutlined/>}
-                            title="Households"
-                            description="Create households and manage tasks together with ease."
+                            title={t("home.features.households.title")}
+                            description={t("home.features.households.description")}
                         />
                         <Feature
                             icon={<CalendarOutlined/>}
-                            title="Smart Scheduling"
-                            description="Set custom intervals and always know what’s due next."
+                            title={t("home.features.scheduling.title")}
+                            description={t("home.features.scheduling.description")}
                         />
                         <Feature
                             icon={<CheckCircleOutlined/>}
-                            title="Clear Ownership"
-                            description="Assign tasks so everyone knows what they’re responsible for."
+                            title={t("home.features.ownership.title")}
+                            description={t("home.features.ownership.description")}
                         />
                     </div>
                 </div>

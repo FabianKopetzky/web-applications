@@ -8,7 +8,7 @@ import ChoreItem from "../../components/ChoreItem";
 import api from "../../services/api";
 import UserModel from "../../models/UserModel";
 import AddPeopleInput from "../../components/HouseholdUsers";
-import {Alert, Button, Space, Table, notification, Row, Col, Card, Tooltip} from "antd";
+import {Alert, Button, Space, Table, notification, Row, Col, Card, Tooltip, Tag, Popconfirm} from "antd";
 import {EditOutlined, ArrowLeftOutlined, DeleteOutlined, CheckOutlined} from '@ant-design/icons';
 import EditableCell from "../../components/EditableCell";
 import LoadingSpinner from "../../components/LoadingSpinner.jsx";
@@ -44,6 +44,15 @@ function HouseHold() {
     const [notificationHandled, setNotificationHandled] = useState(false);
 
     const [expandedRows, setExpandedRows] = useState({}); // { [taskKey]: true/false }
+
+
+    const latestTasksRef = useRef(householdChores);
+
+    useEffect(() => {
+        latestTasksRef.current = householdChores;
+    }, [householdChores]);
+
+
 
     const toggleExpanded = (key) => {
         setExpandedRows(prev => ({ ...prev, [key]: !prev[key] }));
@@ -180,7 +189,7 @@ function HouseHold() {
         try {
             const accessToken = localStorage.getItem("accessToken");
             // const householdModel = new HouseHoldModel(houseHold.householdName, householdChores, houseHold.members);
-            const response = await api.put(`${HOUSEHOLD_API}/${id}`, {tasks: householdChores}, {
+            const response = await api.put(`${HOUSEHOLD_API}/${id}`, {tasks: latestTasksRef.current}, {
                 headers: {Authorization: `Bearer ${accessToken}`}
             });
             console.log(response.data);
@@ -298,25 +307,28 @@ function HouseHold() {
                             <Button
                                 type="primary"
                                 onClick={async () => {
-                                    await persistChanges();
+                                    await persistChanges()
+                                    // await persistChanges(latestTasksRef.current); // use latest state
                                     notification.destroy();
                                     notificationShownRef.current = false;
-                                    setChangesMade(false); // reset unsaved changes
+                                    setChangesMade(false);
                                 }}
                             >
                                 {t('household.saveChanges')}
                             </Button>
+
                             <Button
                                 danger
                                 onClick={async () => {
                                     await reloadData();
                                     notification.destroy();
                                     notificationShownRef.current = false;
-                                    setChangesMade(false); // reset unsaved changes
+                                    setChangesMade(false);
                                 }}
                             >
                                 {t('household.discardChanges')}
                             </Button>
+
                         </Space>
                     </Space>
                 ),
@@ -324,7 +336,6 @@ function HouseHold() {
                 duration: 0,
                 closeIcon: null,
                 onClose: () => {
-                    // optional: allow reopening if user closes manually
                     notificationShownRef.current = false;
                 },
             });
@@ -334,7 +345,7 @@ function HouseHold() {
 
 
 
-    const changesPanel = (
+    // const changesPanel = (
         // <div>
         //   <p>{t('household.changeInfo')}</p>
         //   <div className="flex flex-row gap-2">
@@ -343,26 +354,26 @@ function HouseHold() {
         //   </div>
         // </div>
 
-        <Alert
-            message={t('generic.warning')}
-            description={
-                <Space direction="vertical">
-                    <p>{t('household.changeInfo')}</p>
-                    <Space>
-                        <Button type="primary" onClick={() => persistChanges()}>
-                            {t('household.saveChanges')}
-                        </Button>
-                        <Button onClick={() => reloadData()} danger>
-                            {t('household.discardChanges')}
-                        </Button>
-                    </Space>
-                </Space>
-            }
-            type="warning"
-            showIcon
-        />
-
-    );
+    //     <Alert
+    //         message={t('generic.warning')}
+    //         description={
+    //             <Space direction="vertical">
+    //                 <p>{t('household.changeInfo')}</p>
+    //                 <Space>
+    //                     <Button type="primary" onClick={() => persistChanges()}>
+    //                         {t('household.saveChanges')}
+    //                     </Button>
+    //                     <Button onClick={() => reloadData()} danger>
+    //                         {t('household.discardChanges')}
+    //                     </Button>
+    //                 </Space>
+    //             </Space>
+    //         }
+    //         type="warning"
+    //         showIcon
+    //     />
+    //
+    // );
 
     const tableContent = householdChores.map(task =>
         (<ChoreItem taskItem={task} userList={householdUsers} onUpdate={item => updateTask(item)}
@@ -403,15 +414,87 @@ function HouseHold() {
 
     const householdHeader = editingHouseholdName ? householdNameInput : householdNameTitle;
 
+    const getPercentTag = (daysLeft, percentUsed) => {
+        const getDueText = (daysLeft) => {
+            if (daysLeft === 0) {
+                return t('household.dueToday');
+            }
+
+            if (daysLeft < 0) {
+                return t('household.overdueBy', {
+                    count: Math.abs(daysLeft)
+                });
+            }
+
+            return t('household.dueIn', {
+                count: daysLeft
+            });
+        };
+
+
+        if (percentUsed === null) {
+            return <Tag>-</Tag>;
+        }
+        const color =
+            percentUsed > 1 ? 'red' :
+                percentUsed >= 0.9 ? 'volcano' :
+                    percentUsed >= 0.7 ? 'gold' :
+                        percentUsed >= 0.4 ? 'lime' :
+                            'green';
+
+        return (
+            <Tag color={color} variant="solid">
+                {getDueText(daysLeft)}
+            </Tag>
+        );
+        //
+        // if (percentUsed > 1) {
+        //     return <Tag color="red" variant={"solid"}>Overdue</Tag>;
+        // }
+        //
+        // if (percentUsed >= 0.9) {
+        //     return <Tag color="volcano" variant={"solid"}>{getDueText(daysLeft)}</Tag>;
+        // }
+        //
+        // if (percentUsed >= 0.7) {
+        //     return <Tag color="gold" variant={"solid"}>{getDueText(daysLeft)}</Tag>;
+        // }
+        //
+        // if (percentUsed >= 0.4) {
+        //     return <Tag color="lime" variant={"solid"}>{getDueText(daysLeft)}</Tag>;
+        // }
+        //
+        // return <Tag color="green" variant={"solid"}>
+        //     {getDueText(daysLeft)}
+        // </Tag>;
+    };
+
+
 
     const columns = [
+        {
+            title: t('household.daysLeft'),
+            key: 'daysLeft',
+            width: 140,
+            fixed: 'left',
+            render: (_, record) =>
+                getPercentTag(record.daysLeft, record.percentUsed),
+            sorter: (a, b) => (a.percentUsed ?? 0) - (b.percentUsed ?? 0),
+        },
         {
             title: t('household.task'),
             dataIndex: 'taskName',
             key: 'taskName',
-            width: 150,
-            ellipsis: true,
+            // fixed: 'left',
+            width: 200,
+            // ellipsis: true,
             render: (_, record) => (
+                <div style={{
+                    whiteSpace: 'normal',   // Overrides 'nowrap'
+                    wordWrap: 'break-word', // Breaks long words
+                    wordBreak: 'break-word',
+                    lineHeight: '1.5'
+                }}>
                 <EditableCell
                     value={record.taskName}
                     isEditing={editing.key === record.key && editing.field === 'taskName'}
@@ -428,37 +511,38 @@ function HouseHold() {
                         setEditing({key: null, field: null});
                     }}
                 />
+                </div>
             ),
             sorter: (a, b) => a.taskName.localeCompare(b.taskName),
             sortDirections: ['ascend', 'descend'],
         },
-        {
-            title: t('household.description'),
-            dataIndex: 'taskDescription',
-            key: 'taskDescription',
-            width: 200,
-            ellipsis: true,
-            render: (_, record) => (
-                <EditableCell
-                    value={record.taskDescription}
-                    isEditing={editing.key === record.key && editing.field === 'taskDescription'}
-                    onEdit={() => setEditing({key: record.key, field: 'taskDescription'})}
-                    onSave={(value) => {
-                        updateTask(new HouseHoldTask(
-                            record.taskName,
-                            value,
-                            record.interval,
-                            record.lastDoneDate,
-                            record.assignedUser,
-                            record.key
-                        ));
-                        setEditing({key: null, field: null});
-                    }}
-                />
-            ),
-            sorter: (a, b) => a.taskDescription.localeCompare(b.taskDescription),
-            sortDirections: ['ascend', 'descend'],
-        },
+        // {
+        //     title: t('household.description'),
+        //     dataIndex: 'taskDescription',
+        //     key: 'taskDescription',
+        //     width: 200,
+        //     ellipsis: true,
+        //     render: (_, record) => (
+        //         <EditableCell
+        //             value={record.taskDescription}
+        //             isEditing={editing.key === record.key && editing.field === 'taskDescription'}
+        //             onEdit={() => setEditing({key: record.key, field: 'taskDescription'})}
+        //             onSave={(value) => {
+        //                 updateTask(new HouseHoldTask(
+        //                     record.taskName,
+        //                     value,
+        //                     record.interval,
+        //                     record.lastDoneDate,
+        //                     record.assignedUser,
+        //                     record.key
+        //                 ));
+        //                 setEditing({key: null, field: null});
+        //             }}
+        //         />
+        //     ),
+        //     sorter: (a, b) => a.taskDescription.localeCompare(b.taskDescription),
+        //     sortDirections: ['ascend', 'descend'],
+        // },
         {
             title: t('household.interval'),
             dataIndex: 'interval',
@@ -518,14 +602,13 @@ function HouseHold() {
             dataIndex: 'assignedUser',
             key: 'assignedUser',
             width: 140,
-            ellipsis: true,
             render: (_, record) => (
                 <EditableCell
                     value={record.assignedUser}
                     isEditing={editing.key === record.key && editing.field === 'assignedUser'}
                     inputType="select"
                     options={householdUsers}
-                    onEdit={() => setEditing({key: record.key, field: 'assignedUser'})}
+                    onEdit={() => setEditing({ key: record.key, field: 'assignedUser' })}
                     onSave={(value) => {
                         updateTask(new HouseHoldTask(
                             record.taskName,
@@ -535,30 +618,15 @@ function HouseHold() {
                             value,
                             record.key
                         ));
-                        setEditing({key: null, field: null});
+                        setEditing({ key: null, field: null });
                     }}
                 />
             ),
+            filters: householdUsers.map(user => ({ text: user, value: user })),
+            onFilter: (value, record) => record.assignedUser === value,
+            filterSearch: true,
         },
-        {
-            title: t('household.actions'),
-            key: 'actions',
-            width: 140,
-            render: (_, record) => {
-                const markAsDone = () => {
-                    const today = new Date().toISOString().split("T")[0];
-                    updateTask(new HouseHoldTask(record.taskName, record.taskDescription, record.interval, today, record.assignedUser, record.key));
-                };
-                return (
-                    <Space size="small">
-                        <Button size="small" icon={<CheckOutlined />} type="primary" onClick={markAsDone}>{t('household.markDone')}</Button>
-                        <Button size="small" icon={<DeleteOutlined />} danger onClick={() => deleteTask(record.rawTask)}>
-                            {/*{t('household.remove')}*/}
-                        </Button>
-                    </Space>
-                );
-            }
-        },
+
         {
             title: t('household.status'),
             key: 'status',
@@ -578,23 +646,69 @@ function HouseHold() {
             },
             sortDirections: ['ascend', 'descend'],
         },
+        {
+            title: t('household.actions'),
+            key: 'actions',
+            width: 140,
+            fixed: 'right',
+            render: (_, record) => {
+                const markAsDone = () => {
+                    const today = new Date().toISOString().split("T")[0];
+                    updateTask(new HouseHoldTask(record.taskName, record.taskDescription, record.interval, today, record.assignedUser, record.key));
+                };
+                return (
+                    <Space size="small">
+                        <Button size="small" icon={<CheckOutlined />} type="primary" onClick={markAsDone}>{t('household.markDone')}</Button>
+                        {/*<Button size="small" icon={<DeleteOutlined />} danger onClick={() => deleteTask(record.rawTask)}>*/}
+
+                        {/*{t('household.remove')}*/}
+                        {/*</Button>*/}
+                        <Popconfirm title={t('household.remove')} onConfirm={() => deleteTask(record.rawTask)}>
+                            <Button
+                                shape="circle"
+                                danger
+                                type="text"
+                                icon={<DeleteOutlined />}
+                            />
+                        </Popconfirm>
+                    </Space>
+                );
+            }
+        },
+
     ];
+    const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
+    const data = householdChores.map(task => {
+        let daysLeft = null;
+        let percentUsed = null;
 
-    const data = householdChores.map(task => ({
-        key: task.key,
-        taskName: task.taskName,
-        taskDescription: task.description,
-        interval: task.interval,
-        lastDoneDate: task.lastDoneDate,
-        assignedUser: task.assignedUser,
-        rawTask: task // optional: keep original object for actions
-    }));
+        if (task.lastDoneDate && task.interval) {
+            const lastDone = new Date(task.lastDoneDate);
+            const today = new Date();
+            const daysSinceDone = Math.floor((today - lastDone) / MS_PER_DAY);
+            daysLeft = task.interval - daysSinceDone;
+            percentUsed = daysSinceDone / task.interval;
+
+        }
+
+        return {
+            key: task.key,
+            taskName: task.taskName,
+            taskDescription: task.description,
+            interval: task.interval,
+            lastDoneDate: task.lastDoneDate,
+            assignedUser: task.assignedUser,
+            daysLeft,
+            percentUsed,
+            rawTask: task
+        };
+    });
 
 
     return (
         <>
-            <Button onClick={() => navigate("/dashboard")} icon={<ArrowLeftOutlined/>}> Dashboard</Button>
+            {/*<Button onClick={() => navigate("/dashboard")} icon={<ArrowLeftOutlined/>}> Dashboard</Button>*/}
 
             {householdHeader}
             <h2>{t('household.loggedInAs')} {userModel?.fullName}</h2>
@@ -614,23 +728,49 @@ function HouseHold() {
                     <Card title={t('household.choreTitle')}>
                         <Table
                             columns={columns}
-                            // columns={columns.filter(c => c.dataIndex !== 'taskDescription')}
                             dataSource={data}
-                            tableLayout="fixed"
-                            scroll={{x: 1200, y: 470}}
-                            size="middle"
-                            showSorterTooltip={{target: 'sorter-icon'}}
-                            expandable={{
-                                expandedRowRender: record => (
-
-                                    <div style={{ whiteSpace: 'pre-wrap' }}>
-                                    {/*<div>*/}
-                                        <strong>{t('household.description')}:</strong> {record.taskDescription}
-                                    </div>
-                                ),
-                                rowExpandable: record => !!record.taskDescription, // only allow expansion if there is a description
+                            scroll={{ x: 'max-content' }}
+                            size="small"
+                            pagination={{
+                                defaultPageSize: 7,
+                                showSizeChanger: true, // This MUST be true for the dropdown to appear
+                                pageSizeOptions: ['7', '14', '21', '50'],
+                                showTotal: (total, range) => t('household.paginationTotal', {
+                                    range0: range[0],
+                                    range1: range[1],
+                                    total: total
+                                }),
+                                position: ['bottomCenter'],
                             }}
-                        />
+                            showSorterTooltip={{ target: 'sorter-icon' }}
+                            expandable={{
+                                expandedRowRender: (record) => (
+                                    <div style={{ padding: '12px', background: '#f9f9f9', borderRadius: '8px' }}>
+                                        <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                                            {t('household.description')}:
+                                        </div>
+                                        <EditableCell
+                                            value={record.taskDescription}
+                                            isEditing={editing.key === record.key && editing.field === 'taskDescription'}
+                                            onEdit={() => setEditing({ key: record.key, field: 'taskDescription' })}
+                                            inputType="text"
+                                            onSave={(value) => {
+                                                updateTask(new HouseHoldTask(
+                                                    record.taskName,
+                                                    value,
+                                                    record.interval,
+                                                    record.lastDoneDate,
+                                                    record.assignedUser,
+                                                    record.key
+                                                ));
+                                                setEditing({ key: null, field: null });
+                                            }}
+                                        />
+                                    </div>
+                                ), // End of expandedRowRender
+                                rowExpandable: (record) => true,
+                            }} // End of expandable object
+                        /> {/* End of Table */}
                     </Card>
                 </Col>
             </Row>

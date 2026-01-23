@@ -93,35 +93,6 @@ const router = createBrowserRouter([
     }
 ]);
 
-// ! THIS IS FOR CLIENT SIDE TESTING
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <App />,
-//     errorElement: <NotFound />
-//   },
-//   {
-//     path: "login",
-//     element: <Login />
-//   },
-//   {
-//     path: "register",
-//     element: <Register />
-//   },
-//   {
-//     path: "dashboard",
-//     element: <Dashboard />
-//   },
-//   {
-//     path: "household/:id",
-//     element: <HouseHold />
-//   },
-//   {
-//     path: "register/:token",
-//     element: <RegisterActivation />  // full activation form
-//   },
-// ]);
-
 export const customTheme = {
     token: {
         colorPrimary: "#3b82f6",

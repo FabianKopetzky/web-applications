@@ -24,9 +24,9 @@ export default function EditableCell({
         <span
           style={{
             flex: 1,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
+            // overflow: "hidden",
+            // textOverflow: "ellipsis",
+            // whiteSpace: "nowrap",
           }}
           title={value} // shows full text on hover
         >
