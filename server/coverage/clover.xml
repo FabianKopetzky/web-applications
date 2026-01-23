@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768905436231" clover="3.2.0">
-  <project timestamp="1768905436231" name="All files">
+<coverage generated="1769193823438" clover="3.2.0">
+  <project timestamp="1769193823438" name="All files">
     <metrics statements="137" coveredstatements="55" conditionals="9" coveredconditionals="9" methods="0" coveredmethods="0" elements="146" coveredelements="64" complexity="0" loc="137" ncloc="137" packages="1" files="1" classes="1"/>
-    <file name="household.js" path="C:\Users\fabia\Desktop\Daten\Hagenberg\5. Semester\web-applications\web-applications\server\routes\household.js">
+    <file name="household.js" path="C:\Users\Michaela Hdzmann\OneDrive - FH OOe\A_MTD\4.Semester\HYP\fhooe-hypernode-dock\node\web-applications\server\routes\household.js">
       <metrics statements="137" coveredstatements="55" conditionals="9" coveredconditionals="9" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
