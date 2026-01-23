@@ -73,8 +73,6 @@ router.put('/:id', async (req, res) => {
     const updateData = req.body;
     delete updateData._id;
 
-    // const updated = await db.collection(COLLECTION_NAME)
-    //   .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
     await db.collection(COLLECTION_NAME)
       .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
 
@@ -92,25 +90,6 @@ router.put('/:id', async (req, res) => {
       res.status(404).send();
     }
 
-    // as below, why would i send a 404 if the requested data and the persisted data are identical?
-    // if (updated.modifiedCount === 1) {
-    //   const toDo = await db.collection(COLLECTION_NAME)
-    //     .findOne({ _id: new ObjectId(req.params.id) });
-
-    //     if (!toDo.members || toDo.members.length === 0) {
-    //       await db.collection(COLLECTION_NAME).deleteOne({ _id: toDo._id });
-    //       return res.status(200).json({ message: "Household deleted because it had no members" });
-    //     }
-
-    //   if (toDo) {
-    //     res.json(toDo);
-    //   } else {
-    //     res.status(404).send();
-    //   }
-    // } else {
-    //   // res.status(404).send();
-    //   // why would i send a 404 if the requested data and the persisted data are identical?
-    // }
   } catch(err) {
     console.error(err);
     res.status(500).send();

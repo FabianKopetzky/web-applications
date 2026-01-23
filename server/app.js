@@ -14,10 +14,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 const userRouter = require('./routes/user');
 const householdRouter = require('./routes/household');
-const api = require('./routes/api');;
-
-
-
+const api = require('./routes/api');
 
 require('dotenv').config();
 
@@ -25,23 +22,16 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
 // oauth database connect
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // in OAuth2 standard, credentials are sent as "application/x-www-form-urlencoded", this middleware allows parsing it
 
@@ -51,13 +41,6 @@ async function getUser(req, res, next) {
   res.locals.user = user;
   next();
 }
-
-// async function getUser(req, res, next) {
-//     res.locals.user = req.user; // already populated by oauth.authenticate()
-//     next();
-// }
-
-
 
 const routes = async () => {
   try {
