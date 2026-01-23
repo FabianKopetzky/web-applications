@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { HouseHoldTask } from "../models/HouseHoldModel";
 import { useTranslation } from "react-i18next";
+import { Button } from "antd";
+import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
 
 export default function ChoreItem({taskItem, userList, onUpdate, onDelete}) {
 
@@ -116,34 +118,33 @@ export default function ChoreItem({taskItem, userList, onUpdate, onDelete}) {
       <td>
         <span className={editingTaskName ? 'hidden' : ''}>{ taskItem.taskName }</span>
         <input ref={taskNameRef} className={editingTaskName ? '' : 'hidden'} value={newTaskName} onChange={e => setNewTaskName(e.target.value)} onBlur={() => updateField()}></input>
-        <button onClick={() => setEditingTaskName(true)}>{ t('household.edit') }</button>
+        <Button type="text" icon={<EditOutlined />} onClick={() => setEditingTaskName(true)} />
       </td>
       <td>
         <span className={editingTaskDescription ? 'hidden' : ''}>{ taskItem.description }</span>
         <input ref={taskDescriptionRef} className={editingTaskDescription ? '' : 'hidden'} value={newTaskDescription} onChange={e => setNewTaskDescription(e.target.value)} onBlur={() => updateField()}></input>
-        <button onClick={() => setEditingTaskDescription(true)}>{ t('household.edit') }</button>
+        <Button type="text" icon={<EditOutlined />} onClick={() => setEditingTaskDescription(true)}/>
       </td>
       <td>
         <span className={editingInterval ? 'hidden' : ''}>{ taskItem.interval }</span>
         <input ref={intervalRef} className={editingInterval ? '' : 'hidden'} min={1} value={newInterval} onChange={e => setNewInterval(e.target.value)} type="number" onBlur={() => updateField()}></input>
-        <button onClick={() => setEditingInterval(true)}>{ t('household.edit') }</button>
+        <Button type="text" icon={<EditOutlined />} onClick={() => setEditingInterval(true)} />
       </td>
       <td>
         <span className={editingLastDone ? 'hidden' : ''}>{ taskItem.lastDoneDate }</span>
         <input ref={lastDoneRef} className={editingLastDone ? '' : 'hidden'} value={newLastDone} onChange={e => setNewLastDone(e.target.value)} type="date" onBlur={() => updateField()}></input>
-        <button onClick={() => setEditingLastDone(true)}>{ t('household.edit') }</button>
+        <Button type="text" icon={<EditOutlined />} onClick={() => setEditingLastDone(true)} />
       </td>
       <td>
         <span className={editingAssignedUser ? 'hidden' : ''}>{ taskItem.assignedUser }</span>
         <select ref={assignedUserRef} className={editingAssignedUser ? '' : 'hidden'} onChange={e => setNewAssignedUser(e.target.value)} value={newAssignedUser} onBlur={() => updateField()}>
-          {/* FETCH ACTUAL USERS FROM DB */}
           {userOptions}
         </select>
-        <button onClick={() => setEditingAssignedUser(true)}>{ t('household.edit') }</button>
+        <Button type="text" icon={<EditOutlined />} onClick={() => setEditingAssignedUser(true)} />
       </td>
       <td>
-        <button onClick={() => markAsDone()}>{ t('household.markDone') }</button>
-        <button onClick={() => onDelete(taskItem)}>{ t('household.remove') }</button>
+        <Button  icon={<CheckOutlined />} variant="outlined" color="primary" onClick={() => markAsDone()}>{ t('household.markDone') }</Button>
+        <Button  icon={<DeleteOutlined />} danger onClick={() => onDelete(taskItem)}>{ t('household.remove') }</Button>
       </td>
       <td>
         <span>{getDueDate()}</span>

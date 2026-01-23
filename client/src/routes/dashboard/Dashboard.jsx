@@ -1,14 +1,15 @@
 import { useTranslation } from "react-i18next"
-import LogoutButton from "../../components/logoutButton";
 import HouseholdWidget from "./HouseholdWidget";
 import { useEffect, useState } from "react";
 import HouseHold from "../household/Household";
 import { HouseHoldModel } from "../../models/HouseHoldModel";
 import api from "../../services/api";
-import LoggedIn from "../../components/LoggedIn";
 import UserModel from "../../models/UserModel";
 import { useNavigate } from "react-router-dom";
+  import { Row, Col, Form, Input, Button, Typography, Alert } from "antd";
+  import LoadingSpinner from "../../components/LoadingSpinner.jsx";
 
+const { Title, Text } = Typography;
 
 function Dashboard() {
 
@@ -18,7 +19,7 @@ function Dashboard() {
 
   const { t } = useTranslation();
 
-  const [newHouseholdName, setNewHouseholdName] = useState('');
+  // const [newHouseholdName, setNewHouseholdName] = useState('');
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
   const [userModel, setUserModel] = useState(null);
@@ -28,6 +29,8 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
+
+    const [form] = Form.useForm();
 
   useEffect(() => {
       async function loadUserData() {
@@ -69,10 +72,10 @@ function Dashboard() {
       loadUserData();
   }, []);
 
-  async function createNewHousehold() {
+  async function createNewHousehold(values) {
     setError("");
 
-    const currentName = newHouseholdName.trim();
+    const currentName = values.householdName?.trim();
     if(currentName.length <= 0) {
       setError(t('dashboard.error.householdNameEmpty'));
       return;
@@ -87,9 +90,11 @@ function Dashboard() {
       });
 
       setHouseholds([...households, response.data]);
+      form.resetFields();
       console.log(response);
     } catch(err) {
       console.log(err);
+      setError(t("dashboard.error.creatingHousehold"));
     }
   }
 
@@ -139,44 +144,60 @@ function Dashboard() {
      />))}
   </>);
 
-  // YOU CAN MAKE YOUR CUSTOM LOADING SCREEN HERE
   if(loading) {
-    return (<p>{t('generic.loading')}</p>)
+    return <LoadingSpinner />
   }
   
 
   return (
-    <>
-        <LogoutButton />
-        <h1 className='text-center'>{ t('dashboard.title') }</h1>
+    <div style={{ padding: "2rem" }}>
+      <Title level={1} style={{ textAlign: "center" }}>
+        {t("dashboard.title")}
+      </Title>
+      <Title level={3} style={{ textAlign: "center" }}>
+        {t("dashboard.welcomeBack")} {userModel?.fullName}!
+      </Title>
 
-        <h2 className="text-center">{t('dashboard.welcomeBack')} {userModel?.fullName}!</h2>
+      {error && <Alert type="error" message={error} style={{ marginBottom: 20 }} />}
 
-        <div className="flex flex-row w-full justify-evenly">
-          <div>
-            {/* List of households */}
-            <h2>{t('dashboard.myHouseholds')}</h2>
+      <Row gutter={32} justify="space-around">
+        <Col xs={24} md={10}>
+          <Title level={4}>{t("dashboard.myHouseholds")}</Title>
+          {households.map((household) => (
+            <HouseholdWidget
+              key={household._id}
+              houseHoldID={household._id}
+              houseHoldName={household.householdName}
+              memberCount={household.members.length}
+              onDelete={() => deleteHouseholdFromUser(household._id)}
+              onClick={() => openHousehold(household._id)}
+            />
+          ))}
+        </Col>
 
-            {householdList}
-            
-          </div>
-          <div>
-            {/* create household form */}
-            <h2>{t('dashboard.createHousehold')} {newHouseholdName}</h2>
-            
-            <input type="text" maxLength={20} placeholder={t('dashboard.householdNamePlaceholder')} value={newHouseholdName} onInput={e => setNewHouseholdName(e.target.value)}></input>
-            <button onClick={() => createNewHousehold()}>{t('dashboard.createHouseholdButton')}</button>
+        <Col xs={24} md={10}>
+          <Title level={4}>{t("dashboard.createHousehold")}</Title>
 
-            <br></br>
+          <Form form={form} layout="vertical" onFinish={createNewHousehold}>
+            <Form.Item
+              name="householdName"
+              rules={[
+                { required: true, message: t("dashboard.error.householdNameEmpty") },
+                { max: 20, message: t("dashboard.error.householdNameTooLong") },
+              ]}
+            >
+              <Input placeholder={t("dashboard.householdNamePlaceholder")} />
+            </Form.Item>
 
-            <p>{error}</p>
-          </div>
-        </div>
-
-        {/* <button onClick={() => getCurrentUser()}>Test user</button> */}
-
-        {/* <p>{user.firstname}</p> */}
-    </>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                {t("dashboard.createHouseholdButton")}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
+    </div>
   )
 }
 
