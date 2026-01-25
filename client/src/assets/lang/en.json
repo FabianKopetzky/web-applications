@@ -42,7 +42,8 @@
         "householdOpen": "Open",
         "householdDelete": "Delete",
         "error": {
-            "householdNameEmpty": "Your household's name cannot be empty"
+            "householdNameEmpty": "Your household's name cannot be empty",
+            "householdNameTooLong": "This name is sadly too long - please choose another one"
         }
     },
     "household": {

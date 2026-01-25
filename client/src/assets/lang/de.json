@@ -41,7 +41,8 @@
         "householdOpen": "Öffnen",
         "householdDelete": "Entfernen",
         "error": {
-            "householdNameEmpty": "Der Name deines Haushalts darf nicht leer sein"
+            "householdNameEmpty": "Der Name deines Haushalts darf nicht leer sein",
+            "householdNameTooLong": "Dieser Titel ist leider zu lange - bitte wähle einen kürzeren"
         }
     },
     "household": {
