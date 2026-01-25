@@ -7,7 +7,6 @@ function Register() {
 
   return (
     <>
-      {/* <h1 className='text-center'>{ t('register.title') }</h1> */}
             <AuthForm mode="register" />
     </>
   )

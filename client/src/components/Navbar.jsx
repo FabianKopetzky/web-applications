@@ -51,7 +51,6 @@ export default function Navbar({isLoggedIn}) {
                 }}
             >
                 <Logo/>
-                {/* {t("landing.appTitle")} */}
             </Link>
 
             {/* Right side actions */}

@@ -92,14 +92,6 @@ export default function HouseholdUsers({
     const [removeError, setRemoveError] = useState("");
     return (
         <>
-            {/*            <h2>{t('household.memberList')}</h2>
-            {userList}
-            <p>{removeError}</p>
-            <h2>{t('household.addUser')}</h2>
-            <input type="text" placeholder={t('household.placeholder.email')} value={email} onInput={e => setEmail(e.target.value)} />
-            <Button type="primary" icon={<PlusCircleOutlined />} onClick={() => addUserToHousehold()}>{t('household.addUserButton')}</Button>
-            <p>{error}</p>*/}
-
             <Row gutter={24}>
                 {/* Left column: Member list */}
                 <Col xs={24} md={12}>

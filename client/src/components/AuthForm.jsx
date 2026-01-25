@@ -11,9 +11,7 @@ const isStrongEnoughPassword = (password) =>
 
 const { Title, Text } = Typography;
 
-/* ============================================
-   API FUNCTIONS
-============================================ */
+//! API Functions
 
 async function registerUser(email) {
   const res = await fetch("/api/register", {
@@ -62,9 +60,7 @@ async function loginUser(email, password) {
   return res.json();
 }
 
-/* ============================================
-   AUTH FORM COMPONENT
-============================================ */
+//! AUTH FORM COMPONENT
 
 export default function AuthForm({ mode }) {
   const [emailForTitle, setEmailForTitle] = useState("");
@@ -74,18 +70,12 @@ export default function AuthForm({ mode }) {
   const params = useParams();
   const token = params.token;
     const [form] = Form.useForm();
-    
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
 
   const [currentMode, setCurrentMode] = useState(mode || "login");
-  // const [form, setForm] = useState({
-  //   email: "",
-  //   name: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
   const [message, setMessage] = useState("");
 
   const isLogin = currentMode === "login";
@@ -132,7 +122,7 @@ export default function AuthForm({ mode }) {
       }
 
       if (isActivation) {
-        if (!token) throw new Error("error.activationTokenMissing"); 
+        if (!token) throw new Error("error.activationTokenMissing");
 
         const [first_name, ...lastParts] = values.name.trim().split(" ");
         const last_name = lastParts.join(" ") || "";
@@ -157,7 +147,7 @@ export default function AuthForm({ mode }) {
       size="large"
       style={{ maxWidth: 400, width: "100%", margin: "0, auto"}}
       >
-      
+
       <Title level={2}>
         {isLogin && t("login.title")}
         {isRegister && t("register.title")}
@@ -176,7 +166,6 @@ export default function AuthForm({ mode }) {
       )}
 
       {error && <Alert type="error" message={error} showIcon />}
-      {/* Add this right below your error Alert */}
       {message && (
           <Alert
               type="success"
@@ -225,7 +214,7 @@ export default function AuthForm({ mode }) {
               label={t("activation.placeholderPassword")}
               name="password"
               rules={[
-                { required: true, message: t("error.passwordRequired") }, 
+                { required: true, message: t("error.passwordRequired") },
                 {
                   validator: (_, value) =>
                     isStrongEnoughPassword(value)
@@ -267,7 +256,7 @@ export default function AuthForm({ mode }) {
           <Form.Item
             label={t("login.placeholderPassword")}
             name="password"
-            rules={[{ required: true, message: t("error.passwordRequired") }]} 
+            rules={[{ required: true, message: t("error.passwordRequired") }]}
           >
             <Input.Password />
           </Form.Item>
@@ -281,8 +270,6 @@ export default function AuthForm({ mode }) {
           </Button>
         </Form.Item>
 
-
-
         </Form>
       {isLogin && (
         <Text>
@@ -295,10 +282,7 @@ export default function AuthForm({ mode }) {
           {t("register.alreadyAccount")} <Link to="/login">{t("login.title")}</Link>
         </Text>
       )}
-
-        
-        
-        </Space>   
+        </Space>
          </>
   );
 }
