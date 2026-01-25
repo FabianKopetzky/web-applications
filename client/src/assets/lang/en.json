@@ -1,0 +1,156 @@
+{
+    "landing": {
+        "appTitle": "ToDue",
+        "greeting": "We help you stay organized!"
+    },
+    "login": {
+        "title": "Login",
+        "placeholderEmail": "Email",
+        "placeholderPassword": "Password",
+        "button": "Login",
+        "noAccount": "Don't have an account?",
+        "pleaseLogin": "Please log in.",
+        "logout": "Logout",
+        "success": "Login successful!"
+    },
+    "register": {
+        "title": "Register",
+        "placeholderEmail": "Email",
+        "button": "Sign up",
+        "alreadyAccount": "Already have an account?",
+        "checkEmail": "Registration successful! Please check 'your email' (the server console) to activate your account."
+    },
+    "activation": {
+        "title": "Activate your account",
+        "creatingAccountFor": "Creating an account for",
+        "subtitle": "Start planning soon! Please enter your details to activate your account",
+        "placeholderName": "Firstname Lastname",
+        "placeholderPassword": "Password",
+        "placeholderConfirmPassword": "Confirm Password",
+        "button": "Activate",
+        "checkEmail": "Check the server console for the activation link.",
+        "success": "Your account has been successfully activated! Please log in."
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcomeBack": "Welcome back,",
+        "myHouseholds": "My households",
+        "householdNamePlaceholder": "Enter household name",
+        "createHousehold": "Create new household:",
+        "createHouseholdButton": "Create",
+        "householdMembers": "Members",
+        "householdOpen": "Open",
+        "householdDelete": "Delete",
+        "error": {
+            "householdNameEmpty": "Your household's name cannot be empty",
+            "householdNameTooLong": "This name is sadly too long - please choose another one"
+        }
+    },
+    "household": {
+        "choreTitle": "Open chores",
+        "dueToday": "Due Today",
+        "dueIn_one": "Due in {{count}} day",
+        "dueIn_other": "Due in {{count}} days",
+        "overdueBy_one": "Overdue since {{count}} day",
+        "overdueBy_other": "Overdue since {{count}} days",
+        "daysLeft": "Due in",
+        "paginationTotal": "{{range0}}-{{range1}} of {{total}} items",
+        "task": "Chore",
+        "addTask": "Add chore",
+        "description": "Description",
+        "interval": "Interval (in days)",
+        "lastDone": "Last done",
+        "assignedTo": "Assigned user",
+        "actions": "Actions",
+        "status": "Needs to be done until",
+        "loggedInAs": "Logged in as",
+        "changeInfo": "Careful, you have unsaved changes. What do you want to do?",
+        "saveChanges": "Save changes",
+        "discardChanges": "Revert changes",
+        "memberList": "Household members",
+        "addUser": "Add user",
+        "addUserButton": "Add email",
+        "error": {
+            "taskName": "Please enter a chore name",
+            "interval": "Interval must be at least one day",
+            "assignedUser": "A user must be assigned to the chore",
+            "unsavedChangesAdd": "You have unsaved changes in the household. Please either save or discard them before adding a user!",
+            "unsavedChangesRemove": "You have unsaved changes in the household. Please either save or discard them before removing a user!",
+            "emptyMail": "Please enter an email address",
+            "alreadyMember": "This user is already a member of this household",
+            "emailGeneric": "Failed to add user. Verify that a user with this email exists and try again!"
+        },
+        "placeholder": {
+            "task": "Chore title",
+            "description": "Chore description",
+            "email": "Email of user"
+        },
+        "addChore": "Add chore",
+        "edit": "Edit",
+        "remove": "Remove",
+        "markDone": "Done"
+    },
+    "user": {
+        "owner": "Owner"
+    },
+    "generic": {
+        "changeLang": "Change language",
+        "optional": "optional",
+        "loading": "Loading",
+        "warning": "Warning!",
+        "remove": "Remove",
+        "showLess": "Show less",
+        "showMore": "Show more"
+    },
+    "error": {
+        "notFound": "Route not found",
+        "invalidEmail": "Please enter a valid email address",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 8 characters long",
+        "passwordsDontMatch": "Passwords do not match",
+        "confirmPasswordRequired": "Please confirm your password",
+        "activationTokenMissing": "Activation token is missing",
+        "nameRequired": "Name is required",
+        "fetchUserFailed": "Failed to fetch user information",
+        "registrationFailed": "Registration failed, please try again",
+        "activationFailed": "Activation failed, please try again",
+        "activationLinkInvalid": "This activation link is invalid or has expired.",
+        "loginFailed": "Login failed, please check your credentials",
+        "unexpected": "An unexpected error occurred, please try again",
+        "emailRegistered": "This email is already registered.",
+        "namesRequired": "First and last names are required.",
+        "linkInvalid": "Activation link is invalid or expired.",
+        "userNotFound": "User could not be found.",
+        "serverError": "A server error occurred. Please try again."
+    },
+    "success": {
+        "activated": "Account activated successfully!"
+    },
+    "home": {
+        "hero": {
+            "title": "Keep your household tasks",
+            "sync": " perfectly in sync",
+            "description": "ToDue helps households stay organized by tracking recurring tasks, due dates, and responsibilities — so nothing gets forgotten."
+        },
+        "actions": {
+            "getStarted": "Get Started",
+            "viewDemo": "View Demo"
+        },
+        "features": {
+            "households": {
+                "title": "Households",
+                "description": "Create households and manage tasks together with ease."
+            },
+            "scheduling": {
+                "title": "Smart Scheduling",
+                "description": "Set custom intervals and always know what’s due next."
+            },
+            "ownership": {
+                "title": "Clear Ownership",
+                "description": "Assign tasks so everyone knows what they’re responsible for."
+            }
+        }
+    }
+
+}

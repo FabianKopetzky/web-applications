@@ -1,0 +1,123 @@
+const createError = require('http-errors');
+const express = require('express');
+const listEndpoints = require('express-list-endpoints');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const OAuth2Server = require('express-oauth-server');
+const register = require('./routes/register');
+const oAuthModel = require('./oAuthModel');
+
+const drawLogo = require('./drawLogo');
+
+const MongoClient = require('mongodb').MongoClient;
+
+const userRouter = require('./routes/user');
+const householdRouter = require('./routes/household');
+const api = require('./routes/api');
+
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 3000;
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// oauth database connect
+app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // in OAuth2 standard, credentials are sent as "application/x-www-form-urlencoded", this middleware allows parsing it
+
+async function getUser(req, res, next) {
+  let db = req.app.get('db');
+  let user = await db.collection('user').findOne({ _id: res.locals?.oauth?.token?.user?.user_id });
+  res.locals.user = user;
+  next();
+}
+
+const routes = async () => {
+  try {
+    const client = new MongoClient(process.env.MONGODB_CONNECTION_STRING);
+    await client.connect();
+    const db = client.db('household_organizer');
+  
+    app.set('db', db);
+  
+    db.collection('token').createIndex({ accessTokenExpiresAt: 1 }, { expireAfterSeconds: 0 });
+    db.collection('token').createIndex({ refreshTokenExpiresAt: 1 }, { expireAfterSeconds: 0 });
+    db.collection('token').createIndex({ emailTokenExpiresAt: 1 }, { expireAfterSeconds: 0 });
+  
+    const oauth = new OAuth2Server({ model: oAuthModel(db) });
+
+    app.set('oauth', oauth); //? What about this?
+
+    app.use('/api/household',oauth.authenticate(), householdRouter);
+    app.use('/api/user', oauth.authenticate(), userRouter);
+  
+    app.use('/api/register', register);
+    app.use('/api/token', oauth.token({ requireClientAuthentication: { password: false, refresh_token: false } }));
+   
+    app.use('/api', oauth.authenticate(), getUser, api);
+
+
+    app.get('/routes', (req, res) => {
+      const routes = [];
+      app._router.stack.forEach((middleware) => {
+        if (middleware.route) {
+          routes.push(middleware.route);
+        } else if (middleware.name === 'router') {
+          middleware.handle.stack.forEach((handler) => {
+            if (handler.route) {
+              routes.push(handler.route);
+            }
+          });
+        }
+      });
+      res.json(routes);
+    });
+
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.use(function (req, res) {
+      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    });
+
+    // catch 404 and forward to error handler
+    app.use(function(req, res, next) {
+      next(createError(404));
+    });
+
+    // error handler
+    app.use(function(err, req, res) {
+      // set locals, only providing error in development
+      res.locals.message = err.message;
+      res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+      // render the error page
+      res.status(err.status || 500);
+      res.render('error');
+    });
+
+    console.log('-------------------------------------------------');
+    console.log('EXPRESS ENDPOINTS');
+    console.log('-------------------------------------------------');
+    console.log(listEndpoints(app));
+
+    drawLogo();
+
+    app.listen(port, () => console.log(`ToDue listening on port ${port}`));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+routes();
+
+
+module.exports = app;

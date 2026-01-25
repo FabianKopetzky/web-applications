@@ -1,0 +1,154 @@
+{
+    "landing": {
+        "appTitle": "ToDue",
+        "greeting": "Wir helfen dir, organisiert zu bleiben"
+    },
+    "login": {
+        "title": "Anmelden",
+        "placeholderEmail": "E-Mail",
+        "placeholderPassword": "Passwort",
+        "button": "Einloggen",
+        "noAccount": "Noch keinen Account?",
+        "pleaseLogin": "Bitte logge dich ein.",
+        "logout": "Abmelden"
+    },
+    "register": {
+        "title": "Registrieren",
+        "placeholderEmail": "E-Mail",
+        "button": "Registrieren",
+        "alreadyAccount": "Haben Sie bereits einen Account?",
+        "checkEmail": "Registrierung erfolgreich! Bitte überprüfen Sie 'Ihre E-Mails' (die Server Console), um Ihren Account zu aktivieren."
+    },
+    "activation": {
+        "title": "Aktiviere deinen Account",
+        "creatingAccountFor": "Konto wird erstellt für",
+        "subtitle": "Bald kann das Planen endlich losgehen! Bitte geben Sie Ihre Daten ein, um das Konto zu aktivieren.",
+        "placeholderName": "Vorname Nachname",
+        "placeholderPassword": "Passwort",
+        "placeholderConfirmPassword": "Passwort bestätigen",
+        "button": "Aktivieren",
+        "checkEmail": "Prüfe die Server Konsole für den Aktivierungslink.",
+        "success": "Ihr Konto wurde erfolgreich aktiviert! Bitte melden Sie sich an."
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcomeBack": "Willkommen zurück,",
+        "myHouseholds": "Meine Haushalte",
+        "householdNamePlaceholder": "Haushaltname eingeben",
+        "createHousehold": "Neuen Haushalt erstellen:",
+        "createHouseholdButton": "Erstellen",
+        "householdMembers": "Mitglieder",
+        "householdOpen": "Öffnen",
+        "householdDelete": "Entfernen",
+        "error": {
+            "householdNameEmpty": "Der Name deines Haushalts darf nicht leer sein",
+            "householdNameTooLong": "Dieser Titel ist leider zu lange - bitte wähle einen kürzeren"
+        }
+    },
+    "household": {
+        "choreTitle": "Offene Aufgaben",
+        "dueToday": "Heute fällig",
+        "dueIn_one": "Fällig in {{count}} Tag",
+        "dueIn_other": "Fällig in {{count}} Tagen",
+        "overdueBy_one": "Seit {{count}} Tag überfällig",
+        "overdueBy_other": "Seit {{count}} Tagen überfällig",
+        "daysLeft": "Fällig in",
+        "paginationTotal": "{{range0}}-{{range1}} von {{total}} Einträgen",
+        "task": "Aufgabe",
+        "addTask": "Aufgabe hinzufügen",
+        "description": "Beschreibung",
+        "interval": "Intervall (in Tagen)",
+        "lastDone": "Zuletzt erledigt",
+        "assignedTo": "Zugeteilter Nutzer",
+        "actions": "Aktionen",
+        "status": "Muss erledigt werden bis",
+        "loggedInAs": "Eingeloggt als",
+        "changeInfo": "Achtung, du hast ungespeicherte Änderungen! Was möchtest du tun?",
+        "saveChanges": "Speichern",
+        "discardChanges": "Verwerfen",
+        "memberList": "Mitglieder",
+        "addUser": "Nutzer hinzufügen",
+        "addUserButton": "E-Mail hinzufügen",
+        "error": {
+            "taskName": "Bitte gib einen Aufgabentitel ein",
+            "interval": "Das Mindestintervall beträgt einen Tag",
+            "assignedUser": "Ein Nutzer muss zur Aufgabe zugeteilt sein",
+            "unsavedChangesAdd": "Du hast ungespeicherte Änderungen. Bitte speichere oder verwirf sie bevor du einen Nutzer hinzufügst!",
+            "unsavedChangesRemove": "Du hast ungespeicherte Änderungen. Bitte speichere oder verwirf sie bevor du einen Nutzer entfernst!",
+            "emptyMail": "Bitte gib eine E-Mail ein",
+            "alreadyMember": "Dieser Nutzer ist bereits Mitglied dieses Haushalts",
+            "emailGeneric": "Nutzer konnte nicht hinzugefügt werden. Stelle sicher, dass diese E-Mail korrekt ist und versuche es erneut!"
+        },
+        "placeholder": {
+            "task": "Aufgabentitel",
+            "description": "Aufgabenbeschreibung",
+            "email": "Email des Nutzers"
+        },
+        "addChore": "Aufgabe hinzufügen",
+        "edit": "Bearbeiten",
+        "remove": "Löschen",
+        "markDone": "Erledigt"
+    },
+    "user": {
+        "owner": "Besitzer"
+    },
+    "generic": {
+        "changeLang": "Sprache ändern",
+        "optional": "optional",
+        "loading": "Wird geladen...",
+        "warning": "Achtung!",
+        "remove": "Entfernen",
+        "showLess": "Weniger Anzeigen",
+        "showMore": "Mehr Anzeigen"
+    },
+    "error": {
+        "notFound": "Route nicht gefunden",
+        "emailRequired": "E-Mail ist erforderlich",
+        "passwordTooShort": "Passwort muss mindestens 8 Zeichen lang sein",
+        "activationTokenMissing": "Aktivierungstoken fehlt",
+        "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "passwordRequired": "Passwort ist erforderlich",
+        "confirmPasswordRequired": "Bitte bestätigen Sie Ihr Passwort",
+        "nameRequired": "Name ist erforderlich",
+        "fetchUserFailed": "Benutzerinformationen konnten nicht abgerufen werden",
+        "registrationFailed": "Registrierung fehlgeschlagen, bitte versuchen Sie es erneut",
+        "activationFailed": "Aktivierung fehlgeschlagen, bitte versuchen Sie es erneut",
+        "activationLinkInvalid": "Dieser Aktivierungslink ist ungültig oder abgelaufen.",
+        "loginFailed": "Anmeldung fehlgeschlagen, bitte überprüfen Sie Ihre Zugangsdaten",
+        "unexpected": "Ein unerwarteter Fehler ist aufgetreten, bitte versuchen Sie es erneut",
+        "emailRegistered": "Diese E-Mail-Adresse ist bereits registriert.",
+        "namesRequired": "Vor- und Nachname sind erforderlich.",
+        "linkInvalid": "Der Aktivierungslink ist ungültig oder abgelaufen.",
+        "userNotFound": "Benutzer konnte nicht gefunden werden.",
+        "serverError": "Ein Serverfehler ist aufgetreten. Bitte versuche es erneut.",
+        "passwordsDontMatch": "Die Passwörter stimmen nicht überein."
+    },
+    "success": {
+        "activated": "Konto erfolgreich aktiviert!"
+    },
+    "home": {
+        "hero": {
+            "title": "Halte deine Haushaltsaufgaben",
+            "sync": " perfekt im Einklang",
+            "description": "ToDue hilft Haushalten organisiert zu bleiben, indem es wiederkehrende Aufgaben, Termine und Verantwortlichkeiten verfolgt – damit nichts vergessen wird."
+        },
+        "actions": {
+            "getStarted": "Jetzt starten",
+            "viewDemo": "Demo ansehen"
+        },
+        "features": {
+            "households": {
+                "title": "Haushalte",
+                "description": "Erstelle Haushalte und verwalte Aufgaben mühelos gemeinsam."
+            },
+            "scheduling": {
+                "title": "Intelligente Planung",
+                "description": "Lege eigene Intervalle fest und wisse immer, was als Nächstes ansteht."
+            },
+            "ownership": {
+                "title": "Klare Zuständigkeit",
+                "description": "Weise Aufgaben zu, damit jeder weiß, wofür er verantwortlich ist."
+            }
+        }
+    }
+}
