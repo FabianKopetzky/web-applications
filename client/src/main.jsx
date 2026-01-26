@@ -89,6 +89,10 @@ const router = createBrowserRouter([
                 element: <Register/>,
             },
         ]
+    },
+    {
+        path: '*',
+        element: <NotFound />
     }
 ]);
 
