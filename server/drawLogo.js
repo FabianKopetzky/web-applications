@@ -8,7 +8,7 @@ function drawLogo() {
   const fgWhite = '\x1b[37m';
 
   const lines = [
-    bright + fgGreen + 'WELCOME TO TO-DUE" + reset',
+    bright + fgGreen + 'WELCOME TO TO-DUE' + reset,
     fgYellow + 'An application for household management' + reset,
     fgWhite + 'Made during the web applications course at FH Hagenberg 2025/26' + reset,
     fgMagenta + 'Team members: Fabian Kopetzky & Michaela Holzmann' + reset,
